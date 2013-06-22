@@ -19,8 +19,8 @@ class Site extends CI_Controller {
 	 */
 	public function index()
 	{
-		$this->data['title'] = "Main";
-		$this->loadView('main');
+		$this->data['title'] = "Cauta";
+		$this->loadView('search');
 	}
 
 	public function about()
