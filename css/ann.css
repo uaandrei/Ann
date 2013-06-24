@@ -26,7 +26,11 @@ body{
 	width: 100%;
 	height: 2px;
 	background-color: black;
+	margin-bottom: 10px;
 }
 .search{
 	margin-top: 0px!important;
+}
+.inline{
+	display: inline-block;
 }
