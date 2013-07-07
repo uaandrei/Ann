@@ -1,9 +1,7 @@
 <form>
   <h3 id="myModalLabel" class="text-center">Adauga anunt nou</h3>
-  <label>
-    Email
-    <input type="email" name="email" class="span9" required>
-  </label>
+  <label>Email</label>
+  <input type="email" name="email" class="span9" required>
   <div class="controls-row">
     <select class="span3" name="category">
       <?php
