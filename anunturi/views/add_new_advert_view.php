@@ -1,4 +1,4 @@
-<form>
+<form method="post" action="<?php echo base_url();?>site/createNewAdvert">
   <h3 id="myModalLabel" class="text-center">Adauga anunt nou</h3>
   <label>Email</label>
   <input type="email" name="email" class="span9" required>
@@ -17,7 +17,7 @@
     <textarea rows="4" class="span12" placeholder="Descriere anunt"></textarea>
   </div>
   <div class="controls-row">
-    <input type="number" class="span3" placeholder="Pret anunt">
+    <input type="number" class="span3" placeholder="Pret">
     <select class="span2">
       <option>RON</option>
       <option>EUR</option>

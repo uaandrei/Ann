@@ -31,6 +31,14 @@ class Site extends CI_Controller {
 		$this->loadView('category_results_view', $data);
 	}
 
+	public function createNewAdvert()
+	{
+		$data['active_page'] = "";
+		$data['title'] = 'Anuntul a fost adaugat'; 
+		$email = $this->input->post('email');
+		$this->loadView('advert_created_view', $data);
+	}
+
 	private function loadView($view_name, $data)
 	{
 		$this->load->model('category');
