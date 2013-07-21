@@ -1,9 +1,9 @@
 <form method="post" action="<?php echo base_url();?>site/createNewAdvert">
-  <h3 id="myModalLabel" class="text-center">Adauga anunt nou</h3>
+  <h3 id="myModalLabel">Adauga anunt nou</h3>
   <label>Email</label>
-  <input type="email" name="email" class="span9" required>
+  <input name="email" type="email" class="span9" maxlength="100">
   <div class="controls-row">
-    <select class="span3" name="category">
+    <select name="category_id" class="span3">
       <?php
       foreach ($categories as $category)
       {
@@ -11,14 +11,14 @@
       }
       ?>
     </select>
-    <input class="span9" type="text" placeholder="Titlu anunt" required title="Va rugam introduceti titlul anuntului">
+    <input name="title" class="span9" type="text" maxlength="50" placeholder="Titlu anunt" required title="Va rugam introduceti titlul anuntului">
   </div>
   <div class="controls">
-    <textarea rows="4" class="span12" placeholder="Descriere anunt"></textarea>
+    <textarea name="description" rows="4" maxlength="500" class="span12" placeholder="Descriere anunt" required title="Va rugam introduceti o descriere pentru anunt"></textarea>
   </div>
   <div class="controls-row">
-    <input type="number" class="span3" placeholder="Pret">
-    <select class="span2">
+    <input name="price" type="number" class="span3" placeholder="Pret" max="10000" required>
+    <select name="currency" class="span2">
       <option>RON</option>
       <option>EUR</option>
     </select>
@@ -26,15 +26,16 @@
   <div class="controls-row">
     <div class="controls inline">
       <label>Judet</label>
-      <select>
-        <option>Alege judet...</option>
+      <select name="district">
+        <option>Toata tara</option>
         <option>Brasov</option>
         <option>Harghita</option>
       </select>
     </div>
     <div class="controls inline">
       <label>Oras</label>
-      <select>
+      <select name="city">
+        <option>---</option>
         <option>Brasov</option>
         <option>Toplita</option>
       </select>
@@ -44,11 +45,11 @@
     Tip anunt
     <div class="controls">
       <label class="radio">
-        <input type="radio" name="tip_anunt" value="oferta" checked>
+        <input name="type" type="radio" value="oferta" checked>
         Oferta
       </label>
       <label class="radio">
-        <input type="radio" name="tip_anunt" value="cerere">
+        <input name="type" type="radio" value="cerere">
         Cerere
       </label>
     </div>

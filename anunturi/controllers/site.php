@@ -6,6 +6,8 @@ class Site extends CI_Controller {
 	{
 		$data['active_page'] = "index";
 		$data['title'] = "Cauta";
+		$this->load->model('advert');
+		$data['adverts'] = $this->advert->getAll();
 		$this->loadView('home', $data);
 	}
 
@@ -34,9 +36,14 @@ class Site extends CI_Controller {
 	public function createNewAdvert()
 	{
 		$data['active_page'] = "";
-		$data['title'] = 'Anuntul a fost adaugat'; 
-		$email = $this->input->post('email');
+		$data['title'] = 'Anuntul a fost adaugat';
+		// verify data first
+		// if(datacorrect)
+		$this->load->model('advert');
+		$this->advert->add_new_advert_to_db();
 		$this->loadView('advert_created_view', $data);
+		// else
+		// fail;
 	}
 
 	private function loadView($view_name, $data)
@@ -44,7 +51,7 @@ class Site extends CI_Controller {
 		$this->load->model('category');
 		$data['categories'] = $this->category->getAll();
 		$this->load->view('__begin', $data);
-		$this->load->view($view_name);
+		$this->load->view($view_name, $data);
 		$this->load->view('__end');
 	}
 }
