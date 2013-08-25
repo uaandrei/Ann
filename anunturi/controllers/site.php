@@ -6,8 +6,6 @@ class Site extends CI_Controller {
 	{
 		$data['active_page'] = "index";
 		$data['title'] = "Cauta";
-		$this->load->model('advert');
-		$data['adverts'] = $this->advert->getAll();
 		$this->loadView('home', $data);
 	}
 
@@ -24,13 +22,25 @@ class Site extends CI_Controller {
 		$data['title'] = "Anunt nou";
 		$this->loadView('add_new_advert_view', $data);
 	}
+	
+	public function search(){
+		$data['title']="Rezultate cautare";
+		$data['active_page']="";
+		$this->load->model('advert');
+		$searchEntry = $this->input->post('kwd');
+		$data['kwd'] = $searchEntry;
+		$data['advertResults'] = $this->advert->searchByTitle($searchEntry);
+		$this->loadView('advert_results_view',$data);
+	}
 
-	public function category($categoryName)
+	public function category($categoryId)
 	{
-		$data['active_page'] = $categoryName;
-		$data['category_name'] = $categoryName;
-		$data['title'] = 'Rezultate ' . $categoryName;
-		$this->loadView('category_results_view', $data);
+		// redirect if categoryId doesn't exist
+		$data['active_page'] = $categoryId;
+		$data['title'] = 'Rezultate ' . $categoryId;
+		$this->load->model('advert');
+		$data['advertResults'] = $this->advert->getAllByCategoryId($categoryId);
+		$this->loadView('advert_results_view', $data);
 	}
 
 	public function createNewAdvert()

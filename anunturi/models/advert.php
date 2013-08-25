@@ -34,8 +34,23 @@ class advert extends CI_Model
 		$this->db->insert(ADVERT_TABLE, $this);
 	}
 
-    function getAll()
-    {
-    	return $this->db->get(ADVERT_TABLE)->result();
-    }
+	function getAll()
+	{
+		return $this->db->get(ADVERT_TABLE)->result();
+	}
+
+	function getAllByCategoryId($categoryId)
+	{
+		return $this->db->get_where(ADVERT_TABLE, array('category_id'=>$categoryId))->result();
+	}
+	
+	function searchByTitle($searchEntry){
+		// pune max pe $searchEntry
+		// verificare empty undeva, NU AICI
+		$keywords = explode(" ", $searchEntry);
+		foreach($keywords as $keyword){
+			$this->db->like('title', $keyword);
+		}
+		return $this->db->get(ADVERT_TABLE)->result();
+	}
 }

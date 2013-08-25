@@ -35,8 +35,8 @@
 							</div>
 						</li>
 					</ul>
-					<form class="navbar-search pull-right">
-						<input type="text" class="search-query" placeholder="Search">
+					<form class="navbar-search pull-right" method="post" action="<?php echo base_url();?>site/search">
+						<input id="search_bar" name="kwd" type="text" class="search-query" placeholder="Search" value="<?php if(!empty($kwd)) echo $kwd; ?>">
 					</form>
 				</div>
 			</div>
@@ -52,7 +52,7 @@
 							{
 								echo ' class="active"';
 							}
-							echo '><a href="' . base_url() . 'site/category/' . $category->name . '">';
+							echo '><a href="' . base_url() . 'site/category/' . $category->id . '">';
 							if(!is_null($category->icon))
 							{
 								echo '<i class="' . $category->icon . '"></i>';
