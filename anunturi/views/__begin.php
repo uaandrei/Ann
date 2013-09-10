@@ -5,6 +5,8 @@
 	<link href="<?php echo base_url();?>css/bootstrap.min.css" rel="stylesheet" media="screen">
 	<link href="<?php echo base_url();?>css/ann.css" rel="stylesheet" media="screen">
 	<script src="//ajax.googleapis.com/ajax/libs/jquery/1.10.1/jquery.min.js"></script>
+	<script src="<?php echo base_url();?>js/bootstrap.min.js"></script>
+	<script src="<?php echo base_url();?>js/ann.js"></script>
 </head>
 <body>
 	<div class="ann-wrapper background-gradient">

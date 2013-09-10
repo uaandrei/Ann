@@ -1,1 +1,1 @@
-Bine ai venit!
+Hello, welcome!

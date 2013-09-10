@@ -55,6 +55,15 @@ class Site extends CI_Controller {
 		// else
 		// fail;
 	}
+	
+	public function show($advertId)
+	{
+		$data['active_page'] = "";
+		$data['title'] = 'Vizualizare anunt';
+		$this->load->model('advert');
+		$data['advert'] = $this->advert->getById($advertId);
+		$this->loadView('advert_presentation', $data);
+	}
 
 	private function loadView($view_name, $data)
 	{

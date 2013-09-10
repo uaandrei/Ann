@@ -1,7 +1,9 @@
 <?php foreach($advertResults as $advert): ?>
 	<div class='adt-itm'>
 		<div class='adt-ttl'>
-			<a href=#><?=$advert->title.'('.$advert->type.')'?></a>
+			<a href='<?=base_url()."site/show/$advert->id"?>'>
+				<?=$advert->title.'('.$advert->type.')'?>
+			</a>
 		</div>
 		<span>Descriere</span>
 		<div class='adt-mg10'>

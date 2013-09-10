@@ -20,7 +20,8 @@ class advert extends CI_Model
 		parent::__construct();
 	}
 
-	function add_new_advert_to_db(){
+	function add_new_advert_to_db()
+	{
 		//$this->email = $this->input->post('email'); user_id
 		$this->category_id = $this->input->post('category_id');
 		$this->title = $this->input->post('title');
@@ -41,10 +42,23 @@ class advert extends CI_Model
 
 	function getAllByCategoryId($categoryId)
 	{
-		return $this->db->get_where(ADVERT_TABLE, array('category_id'=>$categoryId))->result();
+		return $this->db->get_where(ADVERT_TABLE, array('category_id' => $categoryId))->result();
 	}
-	
-	function searchByTitle($searchEntry){
+
+	function getById($id)
+	{
+		$result =  $this->db->get_where(ADVERT_TABLE, array('id' => $id))->result();
+		if(count($result) >= 1)
+		{
+			return $result[0];
+		} else {
+			return null;
+			// TODO: handle null
+		} 
+	}
+
+	function searchByTitle($searchEntry)
+	{
 		// pune max pe $searchEntry
 		// verificare empty undeva, NU AICI
 		$keywords = explode(" ", $searchEntry);
