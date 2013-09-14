@@ -2,11 +2,12 @@
 <html lang="en">
 <head>
 	<title><?php echo $title;?></title>
-	<link href="<?php echo base_url();?>css/bootstrap.min.css" rel="stylesheet" media="screen">
-	<link href="<?php echo base_url();?>css/ann.css" rel="stylesheet" media="screen">
-	<script src="//ajax.googleapis.com/ajax/libs/jquery/1.10.1/jquery.min.js"></script>
-	<script src="<?php echo base_url();?>js/bootstrap.min.js"></script>
-	<script src="<?php echo base_url();?>js/ann.js"></script>
+	<link href="<?=base_url();?>css/bootstrap.min.css" rel="stylesheet" media="screen">
+	<link href="<?=base_url();?>css/ann.css" rel="stylesheet" media="screen">
+	<script src="https://ajax.googleapis.com/ajax/libs/jquery/1.10.1/jquery.min.js"></script>
+	<script src="<?=base_url().'js/bootstrap.min.js'?>"></script>
+	<script src="<?=base_url().'js/ajaxfileupload.js'?>"></script>
+	<script src="<?=base_url().'js/ann.js'?>"></script>
 </head>
 <body>
 	<div class="ann-wrapper background-gradient">

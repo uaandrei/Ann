@@ -1,5 +1,13 @@
 <?php  if ( ! defined('BASEPATH')) exit('No direct script access allowed');
 
+define('UPLOAD_DIR', './uploads/');
+
+// TABLES
+define('FILES_TABLE', 'files');
+define('ADVERT_FILES_TABLE', 'advert_files');
+define('ADVERT_TABLE', 'adverts');
+define('CATEGORIES_TABLE', 'categories');
+
 /*
 |--------------------------------------------------------------------------
 | File and Directory Modes

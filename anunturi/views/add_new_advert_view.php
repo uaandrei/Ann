@@ -55,3 +55,11 @@
 	<div class="horizontal-separator"></div>
 	<button class="btn btn-primary" type="submit">Adauga</button>
 </form>
+<form method="post" action="<?=base_url().'upload/upload_file'?>" id="upload_file">
+      <label for="userfile">File</label>
+      <input type="file" name="userfile" id="userfile" size="20" />
+ 
+      <input type="submit" name="submit" id="submit" />
+</form>
+<h2>Files</h2>
+<div id="files"></div>

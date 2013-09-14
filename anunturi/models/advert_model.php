@@ -1,18 +1,7 @@
 <?php if ( ! defined('BASEPATH')) exit('No direct script access allowed');
 
-define('ADVERT_TABLE', 'adverts');
-
-class advert extends CI_Model
+class Advert_Model extends CI_Model
 {
-	var $category_id = "";
-	var $title = "";
-	var $description = "";
-	var $price = "";
-	var $currency = "";
-	var $district = "";
-	var $city = "";
-	var $type = "";
-	var $date = "";
 
 	function __construct()
 	{
@@ -22,17 +11,19 @@ class advert extends CI_Model
 
 	function add_new_advert_to_db()
 	{
-		//$this->email = $this->input->post('email'); user_id
-		$this->category_id = $this->input->post('category_id');
-		$this->title = $this->input->post('title');
-		$this->description = $this->input->post('description');
-		$this->price = $this->input->post('price');
-		$this->currency = $this->input->post('currency');
-		$this->district = $this->input->post('district');
-		$this->city = $this->input->post('city');
-		$this->type = $this->input->post('type');
-		$this->date = date('Y-m-d H:i:s');
-		$this->db->insert(ADVERT_TABLE, $this);
+		$data = array(
+				//'email' => $this->input->post('email'),
+				'category_id' => $this->input->post('category_id'),
+				'title' => $this->input->post('title'),
+				'description' => $this->input->post('description'),
+				'price' => $this->input->post('price'),
+				'currency' => $this->input->post('currency'),
+				'district' => $this->input->post('district'),
+				'city' => $this->input->post('city'),
+				'type' => $this->input->post('type'),
+				'date' => date('Y-m-d H:i:s'));
+		$this->db->insert(ADVERT_TABLE, $data);
+		return $this->db->insert_id();
 	}
 
 	function getAll()
