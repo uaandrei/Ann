@@ -28,12 +28,16 @@
 							</li>
 							<div class="btn-group">
 								<a class="btn dropdown-toggle" data-toggle="dropdown" href="#">
-									Utilizator
+									<?=$username?>
 									<span class="caret"></span>
 								</a>
 								<ul class="dropdown-menu">
-									<li><a tabindex="-1" href="#">Autentificare</a></li>
-									<li><a tabindex="-1" href="#">Inregistrare</a></li>
+									<?php if($is_logged):?>
+										<li><a tabindex="-1" href="<?=base_url().'site/logout'?>">Deconectare</a></li>
+									<?php else:?>
+										<li><a tabindex="-1" href="<?=base_url().'site/login'?>">Autentificare</a></li>
+										<li><a tabindex="-1" href="<?=base_url().'site/newUser'?>">Inregistrare</a></li>
+									<?php endif;?>
 								</ul>
 							</div>
 						</li>

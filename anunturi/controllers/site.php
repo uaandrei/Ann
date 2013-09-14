@@ -1,17 +1,20 @@
 <?php if ( ! defined('BASEPATH')) exit('No direct script access allowed');
 
-class Site extends CI_Controller {
+class Site extends CI_Controller 
+{
 
 	private $data;
 
 	public function __construct()
 	{
 		parent::__construct();
-		$this->data['error'] = '';
 		$this->load->model('files_model');
 		$this->load->model('advert_model');
 		$this->load->model('category_model');
 		$this->load->model('advert_files_model');
+		$this->load->model('user_model');
+		
+		$this->data['error'] = '';
 	}
 
 	public function index()
@@ -68,7 +71,7 @@ class Site extends CI_Controller {
 			if(in_array($file, array('.','..'))) continue;
 			copy(UPLOAD_DIR.$file, $dest.$file);
 			unlink(UPLOAD_DIR.$file);
-			$fileId = $this->files_model->insert_file($dest.$file, '');
+			$fileId = $this->files_model->insert_file($dest.$file);
 			$this->advert_files_model->insert_file_for_advert($advertId, $fileId);
 		}
 
@@ -85,12 +88,79 @@ class Site extends CI_Controller {
 		$this->data['advert_files'] = $this->advert_files_model->getFilesForAdvert($advertId);
 		$this->loadView('advert_presentation', $this->data);
 	}
+	
+	public function login()
+	{
+		$this->data['active_page'] = "";
+		$this->data['title'] = 'Autentificare';
+		$this->loadView('user_login_view');
+	}
+	
+	public function newUser()
+	{
+		$this->data['active_page'] = "";
+		$this->data['title'] = 'Utilizator nou';
+		$this->loadView('new_user_view');	
+	}
+	
+	public function submitLogin()
+	{
+		$username = $this->input->post('username');
+		$password = $this->input->post('password');
+		if($this->user_model->checkUser($username, $password))
+		{
+			$this->data['error'] = "";	
+			$this->session->set_userdata('is_logged', true);
+			$this->session->set_userdata('username', $username);
+			$this->index();		
+		} else {
+			$this->data['error'] = "Ati gresiti datele de autentificare.";
+			$this->login();
+		}
+	}
 
+	public function addNewUser()
+	{
+		$username = $this->input->post('username');
+		$password = $this->input->post('password');
+		$userCount = count($this->user_model->getUserByName($username));
+		if($userCount == 0)
+		{
+			$this->data['error'] = '';
+			$this->user_model->addNewUserToDb($username, $password);
+			$this->session->set_userdata('is_logged', true);
+			$this->session->set_userdata('username', $username);
+			$this->index();
+		} else {
+			$this->data['error'] = 'Nume de utilizator folosit';
+			$this->newUser();
+		}
+	}
+	
+	public function logout()
+	{
+		$this->session->set_userdata('is_logged', false);
+		$this->session->set_userdata('username', 'Guest');
+		$this->index();
+	}
+	
 	private function loadView($view_name)
 	{
 		$this->data['categories'] = $this->category_model->getAll();
+		$this->setupSession();
+		$this->data['is_logged'] = $this->session->userdata('is_logged');
+		$this->data['username'] = $this->session->userdata('username');
 		$this->load->view('__begin', $this->data);
 		$this->load->view($view_name, $this->data);
 		$this->load->view('__end');
+	}
+	
+	private function setupSession()
+	{
+		if(!$this->session->userdata('username'))
+		{
+			$this->session->set_userdata('username', 'Guest');
+			$this->session->set_userdata('is_logged', FALSE);
+		}
 	}
 }

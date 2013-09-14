@@ -1,36 +1,3 @@
-#User database;
-#use anunturi;
-drop table if exists `adverts`;
-drop table if exists `categories`;
-
-CREATE TABLE `categories` (
-    `id` int(11) NOT NULL AUTO_INCREMENT,
-    `name` varchar(55) NOT NULL,
-    `icon` varchar(50) DEFAULT NULL,
-    PRIMARY KEY (`id`),
-    UNIQUE KEY `name` (`name`),
-    UNIQUE KEY `id` (`id`),
-    UNIQUE KEY `id_2` (`id`))
-ENGINE=InnoDB AUTO_INCREMENT=1;
-
-create table adverts (
-	id int(11) not null auto_increment,
-        category_id int(11) not null,
-        district varchar(50) not null,
-        city varchar(100) not null,
-        type varchar(10) not null,
-        title varchar(50) not null,
-        description varchar(100) not null,
-        price decimal(10,0) not null,
-        currency varchar(3) not null,
-        `date` datetime not null,
-        primary key(id),
-        key `category_id` (`category_id`),
-        constraint `adverts_fk_category`
-        	foreign key(`category_id`)
-        	references `categories` (`id`)
-) engine=innodb auto_increment=1;
-
 # Insert categories
 insert into categories (name,icon)
 	values ("Categorie1","icon-camera");

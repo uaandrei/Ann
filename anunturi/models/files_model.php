@@ -2,11 +2,10 @@
 
 class Files_Model extends CI_Model {
 
-	public function insert_file($filename, $title)
+	public function insert_file($filename)
 	{
 		$data = array(
-				'filename'     => $filename,
-				'title'        => $title
+				'filename' => $filename
 		);
 		$this->db->insert(FILES_TABLE, $data);
 		return $this->db->insert_id();

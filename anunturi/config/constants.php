@@ -6,6 +6,7 @@ define('UPLOAD_DIR', './uploads/');
 define('FILES_TABLE', 'files');
 define('ADVERT_FILES_TABLE', 'advert_files');
 define('ADVERT_TABLE', 'adverts');
+define('USERS_TABLE', 'users');
 define('CATEGORIES_TABLE', 'categories');
 
 /*
