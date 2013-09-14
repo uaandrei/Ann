@@ -1,6 +1,6 @@
 <?php if ( ! defined('BASEPATH')) exit('No direct script access allowed');
 
-class Site extends CI_Controller 
+class Site extends CI_Controller
 {
 
 	private $data;
@@ -13,7 +13,7 @@ class Site extends CI_Controller
 		$this->load->model('category_model');
 		$this->load->model('advert_files_model');
 		$this->load->model('user_model');
-		
+
 		$this->data['error'] = '';
 	}
 
@@ -33,9 +33,16 @@ class Site extends CI_Controller
 
 	public function newAdvert()
 	{
-		$this->data['active_page'] = "newAdvert";
-		$this->data['title'] = "Anunt nou";
-		$this->loadView('add_new_advert_view');
+		$this->checkSessionData();
+		if($this->session->userdata('is_logged'))
+		{
+			$this->data['active_page'] = "newAdvert";
+			$this->data['title'] = "Anunt nou";
+			$this->loadView('add_new_advert_view');
+		} else {
+			$this->data['error'] = 'Va rugam sa va autentificati pentru a post un anunt.';
+			$this->login();
+		}
 	}
 
 	public function search(){
@@ -88,31 +95,29 @@ class Site extends CI_Controller
 		$this->data['advert_files'] = $this->advert_files_model->getFilesForAdvert($advertId);
 		$this->loadView('advert_presentation', $this->data);
 	}
-	
+
 	public function login()
 	{
 		$this->data['active_page'] = "";
 		$this->data['title'] = 'Autentificare';
 		$this->loadView('user_login_view');
 	}
-	
+
 	public function newUser()
 	{
 		$this->data['active_page'] = "";
 		$this->data['title'] = 'Utilizator nou';
-		$this->loadView('new_user_view');	
+		$this->loadView('new_user_view');
 	}
-	
+
 	public function submitLogin()
 	{
-		$username = $this->input->post('username');
-		$password = $this->input->post('password');
-		if($this->user_model->checkUser($username, $password))
+		$userData = $this->getUserPostData();
+		if($this->user_model->checkUser($userData))
 		{
-			$this->data['error'] = "";	
-			$this->session->set_userdata('is_logged', true);
-			$this->session->set_userdata('username', $username);
-			$this->index();		
+			$this->data['error'] = "";
+			$this->loginUser($userData['username']);
+			$this->index();
 		} else {
 			$this->data['error'] = "Ati gresiti datele de autentificare.";
 			$this->login();
@@ -121,46 +126,62 @@ class Site extends CI_Controller
 
 	public function addNewUser()
 	{
-		$username = $this->input->post('username');
-		$password = $this->input->post('password');
-		$userCount = count($this->user_model->getUserByName($username));
+		$userData = $this->getUserPostData();
+		$userCount = count($this->user_model->getUserByName($userData['username']));
 		if($userCount == 0)
 		{
 			$this->data['error'] = '';
-			$this->user_model->addNewUserToDb($username, $password);
-			$this->session->set_userdata('is_logged', true);
-			$this->session->set_userdata('username', $username);
+			$this->user_model->addNewUserToDb($userData);
+			$this->loginUser($userData['username']);
 			$this->index();
 		} else {
 			$this->data['error'] = 'Nume de utilizator folosit';
 			$this->newUser();
 		}
 	}
-	
+
 	public function logout()
 	{
-		$this->session->set_userdata('is_logged', false);
-		$this->session->set_userdata('username', 'Guest');
+		$this->logoutCurrentUser();
 		$this->index();
 	}
-	
+
+	public function getUserPostData()
+	{
+		return array(
+				'username' => $this->input->post('username'),
+				'password' => $this->input->post('password')
+		);
+	}
+
 	private function loadView($view_name)
 	{
 		$this->data['categories'] = $this->category_model->getAll();
-		$this->setupSession();
+		$this->checkSessionData();
 		$this->data['is_logged'] = $this->session->userdata('is_logged');
 		$this->data['username'] = $this->session->userdata('username');
 		$this->load->view('__begin', $this->data);
 		$this->load->view($view_name, $this->data);
 		$this->load->view('__end');
 	}
-	
-	private function setupSession()
+
+	private function checkSessionData()
 	{
 		if(!$this->session->userdata('username'))
 		{
-			$this->session->set_userdata('username', 'Guest');
-			$this->session->set_userdata('is_logged', FALSE);
+			$this->logoutCurrentUser();
 		}
+	}
+	
+	private function loginUser($username)
+	{
+		$this->session->set_userdata('username', $username);
+		$this->session->set_userdata('is_logged', TRUE);
+	}
+	
+	private function logoutCurrentUser()
+	{
+		$this->session->set_userdata('username', 'Guest');
+		$this->session->set_userdata('is_logged', FALSE);
 	}
 }

@@ -2,13 +2,9 @@
 
 class User_Model extends CI_Model 
 {
-	public function addNewUserToDb($username, $password)
+	public function addNewUserToDb($userData)
 	{
-		$newUserData = array(
-				'username' => $username,
-				'password' => $password	
-		);
-		$this->db->insert(USERS_TABLE, $newUserData);
+		$this->db->insert(USERS_TABLE, $userData);
 	}
 	
 	public function getUserByName($username)
@@ -16,9 +12,9 @@ class User_Model extends CI_Model
 		return $this->db->get_where(USERS_TABLE, array('username' => $username))->result();
 	}
 	
-	public function checkUser($username, $password)
+	public function checkUser($userData)
 	{
-		$query = $this->db->get_where(USERS_TABLE, array('username' => $username, 'password' => $password), 1);
+		$query = $this->db->get_where(USERS_TABLE, $userData, 1);
 		$count = count($query->result());
 		return $count == 1;
 	}
