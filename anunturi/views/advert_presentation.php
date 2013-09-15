@@ -1,4 +1,7 @@
 <div>
+	<p>Anunt publicat de <?=$user_data->username?></p>
+</div>
+<div>
 	<?=$advert->title ?>
 </div>
 <div>

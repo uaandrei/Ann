@@ -9,20 +9,9 @@ class Advert_Model extends CI_Model
 		parent::__construct();
 	}
 
-	function add_new_advert_to_db()
+	function add_new_advert_to_db($advertData)
 	{
-		$data = array(
-				//'email' => $this->input->post('email'),
-				'category_id' => $this->input->post('category_id'),
-				'title' => $this->input->post('title'),
-				'description' => $this->input->post('description'),
-				'price' => $this->input->post('price'),
-				'currency' => $this->input->post('currency'),
-				'district' => $this->input->post('district'),
-				'city' => $this->input->post('city'),
-				'type' => $this->input->post('type'),
-				'date' => date('Y-m-d H:i:s'));
-		$this->db->insert(ADVERT_TABLE, $data);
+		$this->db->insert(ADVERT_TABLE, $advertData);
 		return $this->db->insert_id();
 	}
 

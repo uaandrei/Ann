@@ -1,55 +1,53 @@
+
 use anunturi;
 
 drop table if exists `advert_files`;
-###
-CREATE TABLE `advert_files` (
-`id` int(11) NOT NULL AUTO_INCREMENT PRIMARY KEY,
-`file_id` int(11) NOT NULL,
-`advert_id` int(11) NOT NULL,
-CONSTRAINT `advert_fk` FOREIGN KEY (`advert_id`) REFERENCES `adverts` (`id`),
-CONSTRAINT `file_fk` FOREIGN KEY (`file_id`) REFERENCES `files` (`id`)
-) ENGINE=InnoDB AUTO_INCREMENT=1;
-
 drop table if exists `adverts`;
-###
-create table `adverts` (
-id int(11) not null auto_increment,
-category_id int(11) not null,
-district varchar(50) not null,
-city varchar(100) not null,
-type varchar(10) not null,
-title varchar(50) not null,
-description varchar(100) not null,
-price decimal(10,0) not null,
-currency varchar(3) not null,
-`date` datetime not null,
-primary key(id),
-key `category_id` (`category_id`),
-constraint `adverts_fk_category` foreign key(`category_id`) references `categories` (`id`)
+drop table if exists `categories`;
+drop table if exists `files`;
+drop table if exists `users`;
+
+###############
+create table `users` (
+    `id` int not null primary key auto_increment,
+    `username` varchar(50) not null unique,
+    `password` varchar(50) not null
 ) engine=innodb auto_increment=1;
 
-drop table if exists `categories`;
-###
+CREATE TABLE `files` (
+    `id` int(11) NOT NULL AUTO_INCREMENT PRIMARY KEY,
+    `filename` varchar(255) NOT NULL
+) ENGINE=InnoDB AUTO_INCREMENT=1;
+
 CREATE TABLE `categories` (
-`id` int(11) NOT NULL AUTO_INCREMENT PRIMARY KEY,
-`name` varchar(55) NOT NULL,
-`icon` varchar(50) DEFAULT NULL,
-UNIQUE KEY `name` (`name`),
-UNIQUE KEY `id` (`id`),
-UNIQUE KEY `id_2` (`id`))
+    `id` int(11) NOT NULL AUTO_INCREMENT PRIMARY KEY,
+    `name` varchar(55) NOT NULL,
+    `icon` varchar(50) DEFAULT NULL,
+    UNIQUE KEY `name` (`name`),
+    UNIQUE KEY `id` (`id`),
+    UNIQUE KEY `id_2` (`id`))
 ENGINE=InnoDB AUTO_INCREMENT=1;
 
-drop table if exists `files`;
-###
-CREATE TABLE `files` (
-`id` int(11) NOT NULL AUTO_INCREMENT PRIMARY KEY,
-`filename` varchar(255) NOT NULL
-) ENGINE=InnoDB AUTO_INCREMENT=1;
-
-drop table if exists `users`;
-###
-create table `users` (
-`id` int not null primary key auto_increment,
-`username` varchar(50) not null unique,
-`password` varchar(50) not null
+create table `adverts` (
+    id int(11) not null auto_increment primary key,
+    category_id int(11) not null,
+    `user_id` int not null,
+    district varchar(50) not null,
+    city varchar(100) not null,
+    type varchar(10) not null,
+    title varchar(50) not null,
+    description varchar(100) not null,
+    price decimal(10,0) not null,
+    currency varchar(3) not null,
+    `date` datetime not null,
+    constraint `adverts_fk_user` foreign key (`user_id`) references `users` (`id`),
+    constraint `adverts_fk_category` foreign key(`category_id`) references `categories` (`id`)
 ) engine=innodb auto_increment=1;
+
+CREATE TABLE `advert_files` (
+    `id` int(11) NOT NULL AUTO_INCREMENT PRIMARY KEY,
+    `file_id` int(11) NOT NULL,
+    `advert_id` int(11) NOT NULL,
+    CONSTRAINT `advert_fk` FOREIGN KEY (`advert_id`) REFERENCES `adverts` (`id`),
+    CONSTRAINT `file_fk` FOREIGN KEY (`file_id`) REFERENCES `files` (`id`)
+) ENGINE=InnoDB AUTO_INCREMENT=1;

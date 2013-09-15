@@ -33,8 +33,7 @@ class Site extends CI_Controller
 
 	public function newAdvert()
 	{
-		$this->checkSessionData();
-		if($this->session->userdata('is_logged'))
+		if($this->checkIfUserDataIsSet())
 		{
 			$this->data['active_page'] = "newAdvert";
 			$this->data['title'] = "Anunt nou";
@@ -69,7 +68,22 @@ class Site extends CI_Controller
 		$this->data['title'] = 'Anuntul a fost adaugat';
 		// verify data first
 		// if(datacorrect)
-		$advertId = $this->advert_model->add_new_advert_to_db();
+			
+		$advertData = array(
+				//'email' => $this->input->post('email'),
+				'user_id' => $this->session->userdata('user_id'),
+				'category_id' => $this->input->post('category_id'),
+				'title' => $this->input->post('title'),
+				'description' => $this->input->post('description'),
+				'price' => $this->input->post('price'),
+				'currency' => $this->input->post('currency'),
+				'district' => $this->input->post('district'),
+				'city' => $this->input->post('city'),
+				'type' => $this->input->post('type'),
+				'date' => date('Y-m-d H:i:s'),
+		);
+		
+		$advertId = $this->advert_model->add_new_advert_to_db($advertData);
 
 		$files = scandir(UPLOAD_DIR);
 		$dest = './data/';
@@ -93,6 +107,7 @@ class Site extends CI_Controller
 		$this->data['title'] = 'Vizualizare anunt';
 		$this->data['advert'] = $this->advert_model->getById($advertId);
 		$this->data['advert_files'] = $this->advert_files_model->getFilesForAdvert($advertId);
+		$this->data['user_data'] = $this->user_model->getById($this->data['advert']->user_id);
 		$this->loadView('advert_presentation', $this->data);
 	}
 
@@ -113,10 +128,12 @@ class Site extends CI_Controller
 	public function submitLogin()
 	{
 		$userData = $this->getUserPostData();
-		if($this->user_model->checkUser($userData))
+		$userId = $this->user_model->getUserId($userData);
+		if($userId != 0)
 		{
 			$this->data['error'] = "";
-			$this->loginUser($userData['username']);
+			$userData['user_id'] = $userId;
+			$this->loginUser($userData);
 			$this->index();
 		} else {
 			$this->data['error'] = "Ati gresiti datele de autentificare.";
@@ -131,8 +148,8 @@ class Site extends CI_Controller
 		if($userCount == 0)
 		{
 			$this->data['error'] = '';
-			$this->user_model->addNewUserToDb($userData);
-			$this->loginUser($userData['username']);
+			$userData['user_id'] = $this->user_model->addNewUserToDb($userData);
+			$this->loginUser($userData);
 			$this->index();
 		} else {
 			$this->data['error'] = 'Nume de utilizator folosit';
@@ -157,7 +174,7 @@ class Site extends CI_Controller
 	private function loadView($view_name)
 	{
 		$this->data['categories'] = $this->category_model->getAll();
-		$this->checkSessionData();
+		$this->checkIfUserDataIsSet();
 		$this->data['is_logged'] = $this->session->userdata('is_logged');
 		$this->data['username'] = $this->session->userdata('username');
 		$this->load->view('__begin', $this->data);
@@ -165,23 +182,28 @@ class Site extends CI_Controller
 		$this->load->view('__end');
 	}
 
-	private function checkSessionData()
+	private function checkIfUserDataIsSet()
 	{
-		if(!$this->session->userdata('username'))
+		if(!$this->session->userdata('is_logged'))
 		{
 			$this->logoutCurrentUser();
+			return false;
+		} else {
+			return true;	
 		}
 	}
 	
-	private function loginUser($username)
+	private function loginUser($userData)
 	{
-		$this->session->set_userdata('username', $username);
+		$this->session->set_userdata('username', $userData['username']);
+		$this->session->set_userdata('user_id', $userData['user_id']);
 		$this->session->set_userdata('is_logged', TRUE);
 	}
 	
 	private function logoutCurrentUser()
 	{
 		$this->session->set_userdata('username', 'Guest');
+		$this->session->set_userdata('user_id', 0);
 		$this->session->set_userdata('is_logged', FALSE);
 	}
 }

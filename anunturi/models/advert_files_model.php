@@ -16,7 +16,7 @@ class Advert_Files_Model extends CI_Model
 		$this->db->select('*');
 		$this->db->from(FILES_TABLE);
 		$this->db->join(ADVERT_FILES_TABLE, ADVERT_FILES_TABLE.'.file_id = '.FILES_TABLE.'.id');
-		//$this->db->where('advert_id', $advertId);
+		$this->db->where(ADVERT_FILES_TABLE.'.advert_id', $advertId);
 		return $this->db->get()->result();
 	}
 }

@@ -1,4 +1,4 @@
-<?php // TODO
+<?php // TODO: uploaded files for advert
 if (isset($files) && count($files))
 {
 	?>
