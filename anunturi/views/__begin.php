@@ -17,14 +17,14 @@
 					<span class="brand">Anunturi</span>
 					<ul class="nav">
 						<li class="<?php if($active_page == 'index') echo 'active'?>">
-							<a href="<?php echo base_url()?>site/index">Acasa</a>
+							<a href="<?php echo base_url()?>advert/index">Acasa</a>
 						</li>
 						<li class="<?php if($active_page == 'newAdvert') echo 'active'?>">
-							<a href="<?php echo base_url();?>site/newAdvert">Adauga Anunt</a>
+							<a href="<?php echo base_url();?>user/newAdvert">Adauga Anunt</a>
 						</li>
 						<li>
 							<li class="<?php if($active_page == 'about') echo 'active'?>">
-								<a href="<?php echo base_url()?>site/about">Despre</a>
+								<a href="<?php echo base_url()?>advert/about">Despre</a>
 							</li>
 							<div class="btn-group">
 								<a class="btn dropdown-toggle" data-toggle="dropdown" href="#">
@@ -33,16 +33,16 @@
 								</a>
 								<ul class="dropdown-menu">
 									<?php if($is_logged):?>
-										<li><a tabindex="-1" href="<?=base_url().'site/logout'?>">Deconectare</a></li>
+										<li><a tabindex="-1" href="<?=base_url().'user/logout'?>">Deconectare</a></li>
 									<?php else:?>
-										<li><a tabindex="-1" href="<?=base_url().'site/login'?>">Autentificare</a></li>
-										<li><a tabindex="-1" href="<?=base_url().'site/newUser'?>">Inregistrare</a></li>
+										<li><a tabindex="-1" href="<?=base_url().'user/login'?>">Autentificare</a></li>
+										<li><a tabindex="-1" href="<?=base_url().'user/newUser'?>">Inregistrare</a></li>
 									<?php endif;?>
 								</ul>
 							</div>
 						</li>
 					</ul>
-					<form class="navbar-search pull-right" method="post" action="<?php echo base_url();?>site/search">
+					<form class="navbar-search pull-right" method="post" action="<?php echo base_url();?>advert/search">
 						<input id="search_bar" name="kwd" type="text" class="search-query" placeholder="Search" value="<?php if(!empty($kwd)) echo $kwd; ?>">
 					</form>
 				</div>
@@ -59,7 +59,7 @@
 							{
 								echo ' class="active"';
 							}
-							echo '><a href="' . base_url() . 'site/category/' . $category->id . '">';
+							echo '><a href="' . base_url() . 'advert/category/' . $category->id . '">';
 							if(!is_null($category->icon))
 							{
 								echo '<i class="' . $category->icon . '"></i>';

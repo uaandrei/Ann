@@ -1,5 +1,5 @@
 <?=$error?>
-<form class='add_user' method="post" action='<?=base_url().'site/addNewUser'?>'>
+<form class='add_user' method="post" action='<?=base_url().'user/addNewUser'?>'>
 	<table>
 		<tr>
 			<td>Utilizator</td>

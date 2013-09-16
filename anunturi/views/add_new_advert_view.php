@@ -1,5 +1,5 @@
 <form method="post"
-	action="<?php echo base_url();?>site/createNewAdvert">
+	action="<?php echo base_url();?>advert/createNewAdvert">
 	<h3 id="myModalLabel">Adauga anunt nou</h3>
 	<label>Email</label> <input name="email" type="email" class="span9"
 		maxlength="100">

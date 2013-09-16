@@ -16,7 +16,7 @@ class User_Model extends CI_Model
 	public function getUserId($userData)
 	{
 		$result = $this->db->select('id')->get_where(USERS_TABLE, $userData, 1)->row();
-		if(isset($result))
+		if(count($result) == 1)
 		{
 			$id = $result->id;
 		} else {
