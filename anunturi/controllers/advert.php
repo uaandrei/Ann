@@ -8,7 +8,7 @@ class Advert extends MY_CONTROLLER
 		$this->data['active_page']="";
 		$searchEntry = $this->input->post('kwd');
 		$this->data['kwd'] = $searchEntry;
-		$this->data['advertResults'] = $this->advert_model->searchByTitle($searchEntry);
+		$this->data['advertResults'] = $this->advert_model->getByTitle($searchEntry);
 		$this->loadView('advert_results_view');
 	}
 
@@ -33,17 +33,18 @@ class Advert extends MY_CONTROLLER
 				'date' => date('Y-m-d H:i:s'),
 		);
 		
-		$advertId = $this->advert_model->add_new_advert_to_db($advertData);
+		$advertFile['advert_id'] = $this->advert_model->insert($advertData);
 
 		$files = scandir(UPLOAD_DIR);
 		$dest = './data/';
 		foreach ($files as $file)
 		{
 			if(in_array($file, array('.','..'))) continue;
-			copy(UPLOAD_DIR.$file, $dest.$file);
+			$data['filename'] = $dest.$file;
+			copy(UPLOAD_DIR.$file, $data['filename']);
 			unlink(UPLOAD_DIR.$file);
-			$fileId = $this->files_model->insert_file($dest.$file);
-			$this->advert_files_model->insert_file_for_advert($advertId, $fileId);
+			$advertFile['file_id'] = $this->files_model->insert($data);
+			$this->advert_files_model->insert($advertFile);
 		}
 
 		$this->loadView('advert_created_view');
@@ -56,7 +57,7 @@ class Advert extends MY_CONTROLLER
 		// redirect if categoryId doesn't exist
 		$this->data['active_page'] = $categoryId;
 		$this->data['title'] = 'Rezultate ' . $categoryId;
-		$this->data['advertResults'] = $this->advert_model->getAllByCategoryId($categoryId);
+		$this->data['advertResults'] = $this->advert_model->getByCategoryId($categoryId);
 		$this->loadView('advert_results_view');
 	}
 

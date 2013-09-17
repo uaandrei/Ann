@@ -22,7 +22,7 @@ class User extends MY_CONTROLLER
 		if($userCount == 0)
 		{
 			$this->data['error'] = '';
-			$userData['user_id'] = $this->user_model->addNewUserToDb($userData);
+			$userData['user_id'] = $this->user_model->insert($userData);
 			$this->loginUser($userData);
 			$this->index();
 		} else {

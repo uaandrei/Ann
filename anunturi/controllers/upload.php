@@ -1,6 +1,6 @@
 <?php if ( ! defined('BASEPATH')) exit('No direct script access allowed');
 
-class Upload extends CI_Controller
+class Upload extends MY_CONTROLLER
 {
 	public function __construct()
 	{
@@ -46,7 +46,5 @@ class Upload extends CI_Controller
 	{
 		// make sure to create multiple temp file in master temp file?!?! ceva de genu
 		//load files from temp
-// 		$files = $this->files_model->get_files();
-// 		$this->load->view('files', array('files' => $files));
 	}
 }

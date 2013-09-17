@@ -1,41 +1,22 @@
 <?php if ( ! defined('BASEPATH')) exit('No direct script access allowed');
 
-class Files_Model extends CI_Model {
+class Files_Model extends MY_MODEL
+{
+	public function __construct()
+	{
+		parent::__construct();
+		$this->tableName = FILES_TABLE;
+	}
 
-	public function insert_file($filename)
-	{
-		$data = array(
-				'filename' => $filename
-		);
-		$this->db->insert(FILES_TABLE, $data);
-		return $this->db->insert_id();
-	}
-	 
-	public function get_files()
-	{
-		return $this->db->select()
-		->from(FILES_TABLE)
-		->get()
-		->result();
-	}
-	
+	// TODO: review delete methods
 	public function delete_file($file_id)
 	{
 		$file = $this->get_file($file_id);
-		if (!$this->db->where('id', $file_id)->delete(FILES_TABLE))
+		if (!$this->db->where('id', $file_id)->delete($this->tableName))
 		{
 			return FALSE;
 		}
 		unlink(UPLOAD_DIR . $file->filename);
 		return TRUE;
-	}
-	 
-	public function get_file($file_id)
-	{
-		return $this->db->select()
-		->from(FILES_TABLE)
-		->where('id', $file_id)
-		->get()
-		->row();
 	}
 }

@@ -1,21 +1,21 @@
 <?php if ( ! defined('BASEPATH')) exit('No direct script access allowed');
 
-class User_Model extends CI_Model 
-{
-	public function addNewUserToDb($userData)
+class User_Model extends MY_MODEL 
+{	
+	public function __construct()
 	{
-		$this->db->insert(USERS_TABLE, $userData);
-		return $this->db->insert_id();
+		parent::__construct();
+		$this->tableName = USERS_TABLE;
 	}
 	
 	public function getUserByName($username)
 	{
-		return $this->db->get_where(USERS_TABLE, array('username' => $username))->result();
+		return $this->db->get_where($this->tableName, array('username' => $username))->result();
 	}
 	
 	public function getUserId($userData)
 	{
-		$result = $this->db->select('id')->get_where(USERS_TABLE, $userData, 1)->row();
+		$result = $this->db->select('id')->get_where($this->tableName, $userData, 1)->row();
 		if(count($result) == 1)
 		{
 			$id = $result->id;
@@ -23,10 +23,5 @@ class User_Model extends CI_Model
 			$id = 0;
 		}
 		return $id;
-	}
-	
-	public function getById($id)
-	{
-		return $this->db->get_where(USERS_TABLE, array('id'=>$id))->row();
 	}
 }

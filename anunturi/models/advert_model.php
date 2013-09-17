@@ -1,50 +1,27 @@
 <?php if ( ! defined('BASEPATH')) exit('No direct script access allowed');
 
-class Advert_Model extends CI_Model
+class Advert_Model extends MY_MODEL
 {
-
 	function __construct()
 	{
-		// Call the Model constructor
 		parent::__construct();
+		$this->tableName = ADVERT_TABLE;
 	}
 
-	function add_new_advert_to_db($advertData)
+	function getByCategoryId($categoryId)
 	{
-		$this->db->insert(ADVERT_TABLE, $advertData);
-		return $this->db->insert_id();
+		return $this->db->get_where($this->tableName, array('category_id' => $categoryId))->result();
 	}
 
-	function getAll()
+	function getByTitle($searchEntry)
 	{
-		return $this->db->get(ADVERT_TABLE)->result();
-	}
-
-	function getAllByCategoryId($categoryId)
-	{
-		return $this->db->get_where(ADVERT_TABLE, array('category_id' => $categoryId))->result();
-	}
-
-	function getById($id)
-	{
-		$result =  $this->db->get_where(ADVERT_TABLE, array('id' => $id))->result();
-		if(count($result) >= 1)
-		{
-			return $result[0];
-		} else {
-			return null;
-			// TODO: handle null
-		} 
-	}
-
-	function searchByTitle($searchEntry)
-	{
-		// pune max pe $searchEntry
+		// TODO: pune max pe $searchEntry
 		// verificare empty undeva, NU AICI
 		$keywords = explode(" ", $searchEntry);
-		foreach($keywords as $keyword){
+		foreach($keywords as $keyword)
+		{
 			$this->db->like('title', $keyword);
 		}
-		return $this->db->get(ADVERT_TABLE)->result();
+		return $this->db->get($this->tableName)->result();
 	}
 }
