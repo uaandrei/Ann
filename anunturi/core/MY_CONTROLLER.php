@@ -1,8 +1,9 @@
 <?php if ( ! defined('BASEPATH')) exit('No direct script access allowed');
 
-class MY_CONTROLLER extends CI_Controller 
+class MY_CONTROLLER extends CI_Controller
 {
 	protected $data;
+	private $layout;
 
 	public function __construct()
 	{
@@ -13,22 +14,23 @@ class MY_CONTROLLER extends CI_Controller
 		$this->load->model('advert_files_model');
 		$this->load->model('user_model');
 		$this->data['error'] = '';
+		$this->layout = 'layout/_master';
 	}
-	
+
 	public function index()
 	{
 		$this->data['active_page'] = "index";
 		$this->data['title'] = "Cauta";
-		$this->loadView('home');
+		$this->loadView('layout/home');
 	}
-	
+
 	public function about()
 	{
 		$this->data['active_page'] = "about";
 		$this->data['title'] = "Despre";
-		$this->loadView('about');
+		$this->loadView('layout/about');
 	}
-	
+
 	protected function logoutCurrentUser()
 	{
 		$this->session->set_userdata('username', 'Guest');
@@ -43,7 +45,7 @@ class MY_CONTROLLER extends CI_Controller
 			$this->logoutCurrentUser();
 			return false;
 		} else {
-			return true;	
+			return true;
 		}
 	}
 
@@ -53,8 +55,7 @@ class MY_CONTROLLER extends CI_Controller
 		$this->checkIfUserDataIsSet();
 		$this->data['is_logged'] = $this->session->userdata('is_logged');
 		$this->data['username'] = $this->session->userdata('username');
-		$this->load->view('__begin', $this->data);
-		$this->load->view($view_name, $this->data);
-		$this->load->view('__end');
+		$this->data['content'] = $view_name;
+		$this->load->view($this->layout, $this->data);
 	}
 }
