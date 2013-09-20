@@ -1,4 +1,3 @@
-
 use anunturi;
 
 drop table if exists `advert_files`;
@@ -11,7 +10,12 @@ drop table if exists `users`;
 create table `users` (
     `id` int not null primary key auto_increment,
     `username` varchar(50) not null unique,
-    `password` varchar(50) not null
+    `password` varchar(50) not null,
+    `email` varchar(50) not null unique,
+    `fullname` varchar(50) not null,
+    `city` varchar(50),
+    `district` varchar(50),
+    `phone` varchar(15) not null
 ) engine=innodb auto_increment=1;
 
 CREATE TABLE `files` (

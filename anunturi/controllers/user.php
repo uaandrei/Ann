@@ -18,6 +18,13 @@ class User extends MY_CONTROLLER
 	public function addNewUser()
 	{
 		$userData = $this->getUserPostData();
+		if($this->input->post('conf-password')!=$userData['password'])
+		{
+			// TODO: script for this validation.
+			$this->data['error'] = 'Confirmarea parolei nu a fost corecta.';
+			$this->newUser();	
+			return;		
+		}
 		$userCount = count($this->user_model->getUserByName($userData['username']));
 		if($userCount == 0)
 		{
@@ -78,7 +85,13 @@ class User extends MY_CONTROLLER
 	{
 		return array(
 				'username' => $this->input->post('username'),
-				'password' => $this->input->post('password')
+				'password' => $this->input->post('password'),
+				'email' => $this->input->post('email'),
+				'fullname' => $this->input->post('fullname'),
+				'city' => $this->input->post('city'),
+				'district' => $this->input->post('district'),
+				// TODO: Regex for phone.
+				'phone' => $this->input->post('phone')
 		);
 	}
 }
