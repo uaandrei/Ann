@@ -17,7 +17,7 @@ class User extends MY_CONTROLLER
 
 	public function addNewUser()
 	{
-		$userData = $this->getUserPostData();
+		$userData = $this->getAddNewUserData();
 		if($this->input->post('conf-password')!=$userData['password'])
 		{
 			// TODO: script for this validation.
@@ -47,7 +47,7 @@ class User extends MY_CONTROLLER
 
 	public function submitLogin()
 	{
-		$userData = $this->getUserPostData();
+		$userData = $this->getUserLoginData();
 		$userId = $this->user_model->getUserId($userData);
 		if($userId != 0)
 		{
@@ -67,6 +67,7 @@ class User extends MY_CONTROLLER
 		{
 			$this->data['active_page'] = "newAdvert";
 			$this->data['title'] = "Anunt nou";
+			$this->session->set_userdata('advert_guid', uniqid());
 			$this->loadView('add_new_advert_view');
 		} else {
 			$this->data['error'] = 'Va rugam sa va autentificati pentru a post un anunt.';
@@ -81,7 +82,7 @@ class User extends MY_CONTROLLER
 		$this->session->set_userdata('is_logged', TRUE);
 	}
 
-	private function getUserPostData()
+	private function getAddNewUserData()
 	{
 		return array(
 				'username' => $this->input->post('username'),
@@ -92,6 +93,14 @@ class User extends MY_CONTROLLER
 				'district' => $this->input->post('district'),
 				// TODO: Regex for phone.
 				'phone' => $this->input->post('phone')
+		);
+	}
+
+	private function getUserLoginData()
+	{
+		return array(
+				'username' => $this->input->post('username'),
+				'password' => $this->input->post('password')
 		);
 	}
 }

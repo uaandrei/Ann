@@ -21,8 +21,16 @@ class Upload extends MY_CONTROLLER
 		$config['upload_path'] = UPLOAD_DIR;
 		$config['allowed_types'] = 'jpg|png|jpeg';
 		$config['max_size']  = 500;
-		$config['encrypt_name'] = TRUE;
-			
+		$fileDate = date('siHdmY');
+		$advertGuid = $this->session->userdata('advert_guid');
+		$fileGuid = uniqid();
+		$userId = $this->session->userdata('user_id');
+		if($userId == false)
+		{
+			// TODO: handle user session expired.
+			return;
+		}
+		$config['file_name'] = $fileDate.SEP.$userId.SEP.$advertGuid.SEP.$fileGuid;
 		$this->load->library('upload', $config);
 			
 		if (!$this->upload->do_upload($file_element_name))

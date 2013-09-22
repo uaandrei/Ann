@@ -8,5 +8,5 @@
 	<?=$advert->description ?>
 </div>
 <?php foreach($advert_files as $file): ?>
-	<img src="<?=preg_replace("/./", base_url(), $file->filename, 1)?>" />
+	<img src="<?=base_url().'data/'.$file->filename?>" />
 <?php endforeach;?>
