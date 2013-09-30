@@ -3,7 +3,7 @@
 	<table>
 		<tr>
 			<td>Utilizator</td>
-			<td><input type='text' name='username' size='10' required="required"/></td>
+			<td><input type='text' name='username' required="required"/></td>
 		</tr>
 		<tr>
 			<td>Parola</td><td><input type="password" name='password' required="required"/></td>

@@ -1,0 +1,19 @@
+.add-img
+{
+    border-color: #c6c6c6;
+    border-width: 2px;
+    border-style: solid;
+    border-radius: 3px;
+    padding: 5px;
+}
+
+.add-descr
+{
+    color: #333333;
+    font-family: Tahoma, Geneva, sans-serif;
+}
+
+.list-group-item:hover
+{
+    background-color: #f4f7ff;
+}

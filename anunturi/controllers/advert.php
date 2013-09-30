@@ -58,7 +58,8 @@ class Advert extends MY_CONTROLLER
 		// redirect if categoryId doesn't exist
 		$this->data['active_page'] = $categoryId;
 		$this->data['title'] = 'Rezultate ' . $categoryId;
-		$this->data['advertResults'] = $this->advert_model->getByCategoryId($categoryId);
+		$category = $this->advert_model->getByCategoryId($categoryId);
+		$this->data['advertResults'] = $category;
 		$this->loadView('advert_results_view');
 	}
 

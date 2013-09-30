@@ -1,15 +1,11 @@
 <?php foreach($advertResults as $advert): ?>
-	<div class='adt-itm'>
-		<div class='adt-ttl'>
-			<a href='<?=base_url()."advert/show/$advert->id"?>'>
-				<?=$advert->title.'('.$advert->type.')'?>
-			</a>
-		</div>
-		<span>Descriere</span>
-		<div class='adt-mg10'>
-			<?=$advert->description?>
-		</div>
-		<div>Publicat in data: <?=$advert->date?> <?='('.$advert->district.', '.$advert->city.')'?></div>
-		<div>Pret: <?=$advert->price?><?=' '.$advert->currency?></div>
+
+<div class="list-group">
+	<div class="list-group-item">
+		<a href="<?=base_url()."advert/show/$advert->id"?>"> <img class="add-img" data-src="holder.js/200x200" />
+		</a> <a href="<?=base_url()."advert/show/$advert->id"?>" class="add-descr"><?=$advert->title?> </a> <span class="badge">Data:
+			<?=$advert->date?>
+		</span>
 	</div>
+</div>
 <?php endforeach; ?>
