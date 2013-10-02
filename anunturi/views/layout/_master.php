@@ -9,7 +9,7 @@
 <link rel="stylesheet" href="<?=base_url()?>css/normalize.css">
 <link rel="stylesheet" href="<?=base_url()?>css/main.css">
 <link rel="stylesheet" href="<?=base_url()?>css/add.css">
-<script src="js/modernizr-2.6.2.min.js"></script>
+<script src="<?=base_url()?>js/modernizr-2.6.2.min.js"></script>
 </head>
 <body>
 	<?php $this->load->view("layout/navbar");?>

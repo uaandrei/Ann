@@ -9,7 +9,6 @@ class Upload extends MY_CONTROLLER
     {
         parent::__construct();
         $this->load->helper('url');
-        $this->load->helper('file_for_advert');
     }
 
     public function index()
@@ -73,7 +72,7 @@ class Upload extends MY_CONTROLLER
                 '..'
             )))
                 continue;
-            if (! isFileForThisAdvert($file))
+            if (! $this->isFileForThisAdvert($file))
                 continue;
             if(strpos($file, "thumb")){
                 array_push($thumbs, $file);
@@ -82,4 +81,12 @@ class Upload extends MY_CONTROLLER
         $data['files'] = $thumbs;
         $this->load->view('files', $data);
     }
+
+	private function isFileForThisAdvert($file)
+	{
+		$advertGuid = $this->session->userdata('advert_guid');
+		$userId = $this->session->userdata('user_id');
+		$cmp = explode(SEP, $file);
+		return $cmp[1] == $userId && $cmp[2] == $advertGuid;
+	}
 }

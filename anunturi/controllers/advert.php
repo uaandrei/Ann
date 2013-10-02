@@ -14,7 +14,6 @@ class Advert extends MY_CONTROLLER
         $this->data['kwd'] = $searchEntry;
         $this->data['advertResults'] = $this->advert_model->getByTitle($searchEntry);
         $this->loadView('advert_results_view');
-        $this->load->helper('file_for_advert');
     }
 
     public function createNewAdvert()
@@ -48,7 +47,7 @@ class Advert extends MY_CONTROLLER
                 '..'
             )))
                 continue;
-            if (! isFileForThisAdvert($file))
+            if (! $this->isFileForThisAdvert($file))
                 continue;
             $data['filename'] = $file;
             copy(UPLOAD_DIR . $file, $dest . $data['filename']);
@@ -81,4 +80,12 @@ class Advert extends MY_CONTROLLER
         $this->data['user_data'] = $this->user_model->getById($this->data['advert']->user_id);
         $this->loadView('advert_presentation', $this->data);
     }
+
+	private function isFileForThisAdvert($file)
+	{
+		$advertGuid = $this->session->userdata('advert_guid');
+		$userId = $this->session->userdata('user_id');
+		$cmp = explode(SEP, $file);
+		return $cmp[1] == $userId && $cmp[2] == $advertGuid;
+	}
 }

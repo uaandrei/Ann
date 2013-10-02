@@ -16,7 +16,7 @@ $(document).ready(function() {
 	            if(data.status != 'error')
 	            {
 	               $('#files').html('<p>Reloading files...</p>');
-	               //refresh_files();
+	               refresh_files();
 	               $('#title').val('');
 	            }
 	         }
