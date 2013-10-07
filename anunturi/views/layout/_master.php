@@ -9,6 +9,7 @@
 <link rel="stylesheet" href="<?=base_url()?>css/normalize.css">
 <link rel="stylesheet" href="<?=base_url()?>css/main.css">
 <link rel="stylesheet" href="<?=base_url()?>css/add.css">
+<link rel="stylesheet" href="<?=base_url()?>css/lightbox.css">
 <script src="<?=base_url()?>js/modernizr-2.6.2.min.js"></script>
 </head>
 <body>
@@ -31,6 +32,7 @@
 		</footer>
 	</div>
 	<script src="//ajax.googleapis.com/ajax/libs/jquery/1.10.2/jquery.min.js"></script>
+	<script src="<?=base_url()?>js/lightbox-2.6.min.js"></script>
 	<script src="<?=base_url()?>js/bootstrap.min.js"></script>
 	<script src="<?=base_url()?>js/offcanvas.js"></script>
 	<script src="<?=base_url()?>js/holder.js"></script>

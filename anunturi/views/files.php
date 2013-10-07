@@ -1,12 +1,12 @@
-<?php 
+<?php
 // TODO: uploaded files for advert
 if (isset($files) && count($files)) {
     ?>
 <ul>
 	<?php foreach ($files as $file): ?>
-	<li class="image_wrap">
-		<img src="<?=base_url(). 'uploads/' .$file?>" />
-	</li>
+	<a class="example-image-link" href="<?=base_url(). 'uploads/' .$file?>" data-lightbox="example-1">
+		<img class="example-image" src="<?=base_url(). 'uploads/' .$file?>" alt="thumb-1">
+	</a>
 	<?php endforeach; ?>
 </ul>
 <?php

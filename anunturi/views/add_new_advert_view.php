@@ -52,10 +52,10 @@
 
 	<button class="btn btn-primary" type="submit">Adauga</button>
 </form>
+<h1>Imagini anunt</h1>
 <form method="post" action="<?=base_url().'upload/upload_file'?>" id="upload_file">
-	<label for="userfile">File</label>
 	<input type="file" name="userfile" id="userfile" size="20" />
-	<input type="submit" name="submit" id="submit" />
+	<input type="submit" name="submit" value="Incarcare imagine" id="submit" />
 </form>
-<h2>Files</h2>
-<div id="files"></div>
+<div class="row" id="advert-images">
+</div>
