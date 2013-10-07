@@ -1,64 +1,61 @@
-<form method="post"
-	action="<?php echo base_url();?>advert/createNewAdvert">
-	<h3 id="myModalLabel">Adauga anunt nou</h3>
-	<label>Email</label> <input name="email" type="email" class="span9"
-		maxlength="100">
-	<div class="controls-row">
-		<select name="category_id" class="span3">
-			<?php
-			foreach ($categories as $category)
-			{
-				echo "<option value='$category->id'>$category->name</option>";
-			}
-			?>
-		</select> <input name="title" class="span9" type="text" maxlength="50"
-			placeholder="Titlu anunt" required
-			title="Va rugam introduceti titlul anuntului">
-	</div>
-	<div class="controls">
-		<textarea name="description" rows="4" maxlength="500" class="span12"
-			placeholder="Descriere anunt" required
-			title="Va rugam introduceti o descriere pentru anunt"></textarea>
-	</div>
-	<div class="controls-row">
-		<input name="price" type="number" class="span3" placeholder="Pret"
-			max="10000" required> <select name="currency" class="span2">
-			<option>RON</option>
-			<option>EUR</option>
+<form role="form" method="post" action="<?php echo base_url();?>advert/createNewAdvert">
+	<div class="form-group">
+		<label for="categoryInput">Categorie</label>
+		<select class="form-control" id="categoryInput" name="category">
+			<?php foreach ($categories as $category): ?>
+                <option value='<?=$category->id?>'><?=$category->name?></option>
+			<?php endforeach;?>
 		</select>
 	</div>
-	<div class="controls-row">
-		<div class="controls inline">
-			<label>Judet</label> <select name="district">
-				<option>Toata tara</option>
-				<option>Brasov</option>
-				<option>Harghita</option>
-			</select>
-		</div>
-		<div class="controls inline">
-			<label>Oras</label> <select name="city">
-				<option>---</option>
-				<option>Brasov</option>
-				<option>Toplita</option>
-			</select>
+	<div class="form-group">
+		<label for="titleInput">Titlu</label>
+		<input type="text" class="form-control" id="titleInput" name="title" />
+	</div>
+	<div class="form-group">
+		<div class="row">
+			<div class="col-lg-2">
+				<label for="typeInput">Tip anunt</label>
+				<select class="form-control" id="typeInput" name="type">
+					<option>Oferta</option>
+					<option>Cerere</option>
+				</select>
+			</div>
+			<div class="col-lg-2">
+				<label for="priceInput">Pret</label>
+				<input type="number" class="form-control" id="priceInput" name="price" />
+			</div>
+			<div class="col-lg-2">
+				<label for=""currencyInput"">Moneda</label>
+				<select class="form-control" id="currencyInput" name="currency">
+					<option>RON</option>
+					<option>EUR</option>
+				</select>
+			</div>
 		</div>
 	</div>
-	<label> Tip anunt
-		<div class="controls">
-			<label class="radio"> <input name="type" type="radio" value="oferta"
-				checked> Oferta
-			</label> <label class="radio"> <input name="type" type="radio"
-				value="cerere"> Cerere
-			</label>
-		</div>
-	</label>
-	<div class="horizontal-separator"></div>
+	<div class="form-group">
+		<label for="descriptionInput">Descriere</label>
+		<textarea type="text" class="form-control" id="descriptionInput" name="description" rows="5"></textarea>
+	</div>
+	<div class="form-group">
+		<label for="districtInput">Judet</label>
+		<select class="form-control" id="districtInput" name="district">
+			<option>Judetul...</option>
+		</select>
+	</div>
+	<div class="form-group">
+		<label for="cityInput">Oras</label>
+		<select class="form-control" id="cityInput" name="city">
+			<option>Orasul...</option>
+		</select>
+	</div>
+
 	<button class="btn btn-primary" type="submit">Adauga</button>
 </form>
 <form method="post" action="<?=base_url().'upload/upload_file'?>" id="upload_file">
-      <label for="userfile">File</label>
-      <input type="file" name="userfile" id="userfile" size="20" />
-      <input type="submit" name="submit" id="submit" />
+	<label for="userfile">File</label>
+	<input type="file" name="userfile" id="userfile" size="20" />
+	<input type="submit" name="submit" id="submit" />
 </form>
 <h2>Files</h2>
 <div id="files"></div>

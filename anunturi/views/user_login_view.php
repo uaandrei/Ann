@@ -1,13 +1,12 @@
 <?=$error?>
 <form class='add_user' method="post" action='<?=base_url().'user/submitLogin'?>'>
-	<table>
-		<tr>
-			<td>Utilizator</td>
-			<td><input type='text' name='username' required="required"/></td>
-		</tr>
-		<tr>
-			<td>Parola</td><td><input type="password" name='password' required="required"/></td>
-		</tr>
-	</table>
-	<input type='submit' value='Autentifica'/>
+	<div class="form-group">
+		<label for="usernameInput">Utilizator</label>
+		<input type="text" class="form-control" id="usernameInput" name="username" placeholder="utilizator" required>
+	</div>
+	<div class="form-group">
+		<label for="passwordInput">Password</label>
+		<input type="password" class="form-control" id="passwordInput" name="password" placeholder="parola" required>
+	</div>
+	<button type="submit" class="btn btn-default">Submit</button>
 </form>
