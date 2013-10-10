@@ -26,14 +26,14 @@ class Advert extends MY_CONTROLLER
         $advertData = array(
             // 'email' => $this->input->post('email'),
             'user_id' => $this->session->userdata('user_id'),
-            'category_id' => $this->input->post('categoryInput'),
-            'title' => $this->input->post('titleInput'),
-            'description' => $this->input->post('descriptionInput'),
-            'price' => $this->input->post('priceInput'),
-            'currency' => $this->input->post('"currencyInput"'),
-            'district' => $this->input->post('districtInput'),
-            'city' => $this->input->post('cityInput'),
-            'type' => $this->input->post('typeInput'),
+            'category_id' => $this->input->post('category'),
+            'title' => $this->input->post('title'),
+            'description' => $this->input->post('description'),
+            'price' => $this->input->post('price'),
+            'currency' => $this->input->post('currency'),
+            'district' => $this->input->post('district'),
+            'city' => $this->input->post('city'),
+            'type' => $this->input->post('type'),
             'date' => date('Y-m-d H:i:s')
         );
         

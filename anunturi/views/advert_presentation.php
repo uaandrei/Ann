@@ -2,11 +2,21 @@
 	<p>Anunt publicat de <?=$user_data->username?></p>
 </div>
 <div>
-	<?=$advert->title ?>
+	<?=$advert->title?>
 </div>
 <div>
-	<?=$advert->description ?>
+	<?=$advert->description?>
 </div>
-<?php foreach($advert_files as $file): ?>
-	<img src="<?=base_url().'data/'.$file->filename?>" />
-<?php endforeach;?>
+<?php for($i = 0; $i < count($advert_files); $i=$i+2): ?>
+<?php $fileName = $advert_files[$i]->filename;?>
+<?php $secondFileName = $advert_files[$i+1]->filename;?>
+    <?php if(strpos($fileName, "thumb")):?>
+<a class="example-image-link" href="<?=base_url(). 'data/' .$secondFileName?>" data-lightbox="example-1">
+	<img class="example-image" src="<?=base_url(). 'data/' .$fileName?>" alt="...">
+</a>
+<?php else:?>
+<a class="example-image-link" href="<?=base_url(). 'data/' .$fileName?>" data-lightbox="example-1">
+	<img class="example-image" src="<?=base_url(). 'data/' .$secondFileName?>" alt="...">
+</a>
+<?php endif;?>
+<?php endfor;?>
