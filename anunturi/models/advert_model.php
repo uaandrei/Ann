@@ -9,7 +9,7 @@ class Advert_Model extends MY_MODEL
     {
         parent::__construct();
         $this->tableName = ADVERT_TABLE;
-        $this->output->enable_profiler(TRUE);
+        //$this->output->enable_profiler(TRUE);
     }
 
     function getByCategoryId($categoryId)
