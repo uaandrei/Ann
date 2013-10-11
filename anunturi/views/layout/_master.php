@@ -32,13 +32,13 @@
 		</footer>
 	</div>
 	<script src="//ajax.googleapis.com/ajax/libs/jquery/1.10.2/jquery.min.js"></script>
-	<script src="<?=base_url()?>js/lightbox-2.6.min.js"></script>
 	<script src="<?=base_url()?>js/bootstrap.min.js"></script>
+	<script src="<?=base_url().'js/ajaxfileupload.js'?>"></script>
+	<script src="<?=base_url()?>js/lightbox-2.6.min.js"></script>
 	<script src="<?=base_url()?>js/offcanvas.js"></script>
 	<script src="<?=base_url()?>js/holder.js"></script>
 	<script src="<?=base_url()?>js/plugins.js"></script>
 	<script src="<?=base_url()?>js/main.js"></script>
-	<script src="<?=base_url().'js/ajaxfileupload.js'?>"></script>
 	<script src="<?=base_url().'js/ann.js'?>"></script>
 </body>
 </html>
