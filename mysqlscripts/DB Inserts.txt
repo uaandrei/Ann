@@ -1,14 +1,14 @@
-# Insert categories
+﻿# Insert categories
 insert into categories (name,icon)
-	values ("Categorie1","icon-camera");
+	values ("Telefoane","glyphicon glyphicon-camera");
 insert into categories (name,icon)
-	values ("Categorie2","icon-home");
+	values ("Apartamente","glyphicon glyphicon-home");
 insert into categories (name,icon)
-	values ("Categorie3","icon-tags");
+	values ("Garsoniere","glyphicon glyphicon-tags");
 insert into categories (name,icon)
-	values ("Categorie4","icon-play");
+	values ("Multimedia","glyphicon glyphicon-play");
 insert into categories (name,icon)
-	values ("Categorie5","icon-film");
+	values ("Filme","glyphicon glyphicon-film");
 
 # Insert adverts (200 records)
 INSERT INTO adverts (category_id,district,city,type,title,description,price,currency,date) VALUES ("3","Guanacaste","Nicoya","oferta","vel, vulputate eu, odio. Phasellus","amet, risus. Donec nibh enim, gravida sit amet, dapibus id, blandit at, nisi. Cum sociis natoque penatibus et","1043","RON","13-02-03");

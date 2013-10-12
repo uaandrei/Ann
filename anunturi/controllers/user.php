@@ -18,7 +18,7 @@ class User extends MY_CONTROLLER
 	public function addNewUser()
 	{
 		$userData = $this->getAddNewUserData();
-		if($this->input->post('conf-password')!=$userData['password'])
+		if(md5($this->input->post('conf-password'))!=$userData['password'])
 		{
 			// TODO: script for this validation.
 			$this->data['error'] = 'Confirmarea parolei nu a fost corecta.';
@@ -86,7 +86,7 @@ class User extends MY_CONTROLLER
 	{
 		return array(
 				'username' => $this->input->post('username'),
-				'password' => $this->input->post('password'),
+				'password' => md5($this->input->post('password')),
 				'email' => $this->input->post('email'),
 				'fullname' => $this->input->post('fullname'),
 				'city' => $this->input->post('city'),
@@ -100,7 +100,7 @@ class User extends MY_CONTROLLER
 	{
 		return array(
 				'username' => $this->input->post('username'),
-				'password' => $this->input->post('password')
+				'password' => md5($this->input->post('password'))
 		);
 	}
 }
