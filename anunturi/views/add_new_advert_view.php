@@ -1,4 +1,4 @@
-<form role="form" method="post" action="<?php echo base_url();?>advert/createNewAdvert">
+<form id="add-form" role="form" method="post" action="<?=base_url()?>advert/createNewAdvert">
 	<div class="form-group">
 		<label for="categoryInput">Categorie</label>
 		<select class="form-control" id="categoryInput" name="category">
@@ -25,7 +25,7 @@
 				<input type="number" class="form-control" id="priceInput" name="price" />
 			</div>
 			<div class="col-lg-2">
-				<label for=""currencyInput"">Moneda</label>
+				<label for="currencyInput">Moneda</label>
 				<select class="form-control" id="currencyInput" name="currency">
 					<option>RON</option>
 					<option>EUR</option>
@@ -35,7 +35,7 @@
 	</div>
 	<div class="form-group">
 		<label for="descriptionInput">Descriere</label>
-		<textarea type="text" class="form-control" id="descriptionInput" name="description" rows="5"></textarea>
+		<textarea class="form-control" id="descriptionInput" name="description" rows="5"></textarea>
 	</div>
 	<div class="form-group">
 		<label for="districtInput">Judet</label>
@@ -49,13 +49,15 @@
 			<option>Orasul...</option>
 		</select>
 	</div>
-
-	<button class="btn btn-primary" type="submit">Adauga</button>
 </form>
+<hr />
 <h1>Imagini anunt</h1>
 <form method="post" action="<?=base_url().'upload/upload_file'?>" id="upload_file">
 	<input type="file" name="userfile" id="userfile" size="20" />
-	<input type="submit" name="submit" value="Incarcare imagine" id="submit" />
+	<button id="add-pic-button" type="button" class="btn btn-default">Alege imagine</button>
+	<button id="submit" type="submit" class="btn btn-default">Adauga imagine</button>
+	<div id="uploadfile-name"></div>
 </form>
-<div class="row" id="advert-images">
-</div>
+<div class="row" id="advert-images"></div>
+<hr />
+<button id="submitAdd" class="btn btn-primary">Adauga anunut</button>

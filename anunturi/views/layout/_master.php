@@ -5,6 +5,7 @@
 </title>
 <link rel="stylesheet" href="<?=base_url()?>css/ann.css">
 <link rel="stylesheet" href="<?=base_url()?>css/bootstrap.min.css">
+<link rel="stylesheet" href="<?=base_url()?>css/bootover.css">
 <link rel="stylesheet" href="<?=base_url()?>css/offcanvas.css">
 <link rel="stylesheet" href="<?=base_url()?>css/normalize.css">
 <link rel="stylesheet" href="<?=base_url()?>css/main.css">
