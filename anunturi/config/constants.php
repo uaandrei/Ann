@@ -1,5 +1,7 @@
 <?php  if ( ! defined('BASEPATH')) exit('No direct script access allowed');
 
+define('UNDER_CONSTRUCTION', false);
+
 define('SEP', '_');
 
 define('UPLOAD_DIR', './uploads/');

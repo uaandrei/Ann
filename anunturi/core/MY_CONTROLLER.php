@@ -7,6 +7,10 @@ class MY_CONTROLLER extends CI_Controller
 
 	public function __construct()
 	{
+	    if(UNDER_CONSTRUCTION){
+	        echo "Site under contruction";
+	        exit();
+	    }
 		parent::__construct();
 		$this->load->model('files_model');
 		$this->load->model('advert_model');
