@@ -13,9 +13,8 @@
 	</h2>
 	<?=$advert->description?>
     <h2>
-		<strong>Pret:</strong>
-	<?=$advert->price?><?=$advert->currency?></h2>
-		<strong>Data anuntului:</strong><?=$advert->date?></h3>
+		<strong>Pret:&nbsp;</strong><?=$advert->price?><?=$advert->currency?></h2>
+		<strong>Data anuntului:&nbsp;</strong><?=$advert->date?></h3>
 </div>
 
 <h1>Imagini anunt</h1>

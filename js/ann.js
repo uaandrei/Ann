@@ -18,19 +18,13 @@ $(document).ready(function() {
 		});
 		return false;
 	});
-	$("#userfile").bind('change', function(e) {
-		var fileNamesToUpload = "";
-		var filesToUpload = e.target.files;
-		for ( var i = 0; i < filesToUpload.length; i++) {
-			fileNamesToUpload += filesToUpload[i].name + "<br/>";
-		}
-		$("#uploadfile-name").html(fileNamesToUpload);
-	});
 	$("#submitAdd").click(function() {
-		$("#add-form").submit();
-	});
-	$("#add-pic-button").click(function() {
-		$("#userfile").click();
+		if (isAdvertValid()) {
+			$("#add-form").submit();
+		} else {
+			$("#advert_message").show();
+		}
+		$("#advert_message").html(message);
 	});
 });
 
@@ -43,4 +37,25 @@ function refresh_files() {
 		$('#advert-images').html(data);
 	});
 	$("#uploadfile-name").html("");
+}
+
+var message = "";
+
+function isAdvertValid() {
+	message = "";
+	if (!$("#titleInput").val()) {
+		message += "Introduceti un titlu pentru anunt.<br/>";
+	}
+	if (!$("#priceInput").val()) {
+		message += "Introduceti un pret pentru anunt.<br/>";
+	}
+	if (!$("#priceInput").val() > 99999) {
+		message += "Ati depasit pretul maxim de 99999.<br/>";
+	}
+	if (!$("#descriptionInput").val()) {
+		message += "Introduceti o descriere pentru anunt.<br/>";
+	}
+
+	var isValid = !message;
+	return isValid;
 }
