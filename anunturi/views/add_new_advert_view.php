@@ -1,4 +1,4 @@
-<form role="form" method="post" action="<?php echo base_url();?>advert/createNewAdvert">
+<form id="add-form" role="form" method="post" action="<?=base_url()?>advert/createNewAdvert">
 	<div class="form-group">
 		<label for="categoryInput">Categorie</label>
 		<select class="form-control" id="categoryInput" name="category">
@@ -9,7 +9,7 @@
 	</div>
 	<div class="form-group">
 		<label for="titleInput">Titlu</label>
-		<input type="text" class="form-control" id="titleInput" name="title" />
+		<input type="text" class="form-control" id="titleInput" name="title" maxlength="50" value="<?=set_value('title')?>" />
 	</div>
 	<div class="form-group">
 		<div class="row">
@@ -22,10 +22,10 @@
 			</div>
 			<div class="col-lg-2">
 				<label for="priceInput">Pret</label>
-				<input type="number" class="form-control" id="priceInput" name="price" />
+				<input type="number" class="form-control" id="priceInput" name="price" min="0" max="99999" value="<?=set_value('price')?>" />
 			</div>
 			<div class="col-lg-2">
-				<label for=""currencyInput"">Moneda</label>
+				<label for="currencyInput">Moneda</label>
 				<select class="form-control" id="currencyInput" name="currency">
 					<option>RON</option>
 					<option>EUR</option>
@@ -35,7 +35,7 @@
 	</div>
 	<div class="form-group">
 		<label for="descriptionInput">Descriere</label>
-		<textarea type="text" class="form-control" id="descriptionInput" name="description" rows="5"></textarea>
+		<textarea class="form-control" id="descriptionInput" name="description" rows="5" maxLength="100" value="<?=set_value('description')?>"></textarea>
 	</div>
 	<div class="form-group">
 		<label for="districtInput">Judet</label>
@@ -49,13 +49,22 @@
 			<option>Orasul...</option>
 		</select>
 	</div>
+</form>
+<hr />
 
-	<button class="btn btn-primary" type="submit">Adauga</button>
-</form>
-<h1>Imagini anunt</h1>
-<form method="post" action="<?=base_url().'upload/upload_file'?>" id="upload_file">
-	<input type="file" name="userfile" id="userfile" size="20" />
-	<input type="submit" name="submit" value="Incarcare imagine" id="submit" />
-</form>
-<div class="row" id="advert-images">
+<div class="panel panel-default">
+	<div class="panel-heading">
+		<h3 class="panel-title">Imagini anunt</h3>
+		<form class="form-inline" method="post" action="<?=base_url().'upload/upload_file'?>" id="upload_file">
+			<div class="form-group">
+				<input class="btn btn-default" type="file" name="userfile" id="userfile" size="20" />
+			</div>
+			<button id="submit" type="submit" class="btn btn-default">Adauga imagine</button>
+		</form>
+	</div>
+	<div id="advert-images" class="panel-body">Panel content</div>
 </div>
+
+<hr />
+<div id="advert_message" class="alert alert-danger"><?=validation_errors();?></div>
+<button id="submitAdd" class="btn btn-primary">Adauga anunut</button>

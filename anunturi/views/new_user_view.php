@@ -1,38 +1,36 @@
 <?=$error?>
-<form class='add_user' method="post" action='<?=base_url().'user/addNewUser'?>'>
-	<table>
-		<tr>
-			<td>Nume Utilizator</td>
-			<td><input type='text' name='username' size='10' pattern=".{5,}" required/></td>
-		</tr>
-		<tr>
-			<td>Parola</td>
-			<td><input type="password" name='password' pattern=".{8,}" required/></td>
-		</tr>
-		<tr>
-			<td>Confirmare Parola</td>
-			<td><input type="password" name='conf-password' pattern=".{8,}" required/></td>
-		</tr>
-		<tr>
-			<td>Email</td>
-			<td><input type="email" name='email' required/></td>
-		</tr>
-		<tr>
-			<td>Nume Intreg</td>
-			<td><input type="text" name='fullname' required"/></td>
-		</tr>
-		<tr>
-			<td>Oras</td>
-			<td><input type="text" name='city' /></td>
-		</tr>
-		<tr>
-			<td>Judet</td>
-			<td><input type="text" name='district'></td>
-		</tr>
-		<tr>
-			<td>Telefon</td>
-			<td><input type="text" name='phone' required/></td>
-		</tr>
-	</table>
-	<input type='submit' value='Creeaza'/>
+<form role="form" class='add_user' method="post" action='<?=base_url()?>user/addNewUser'>
+	<div class="form-group">
+		<label for="usernameInput">Nume utilizator</label>
+		<input class="form-control" id="usernameInput" type="text" name="username" size="10" pattern=".{5,}" required />
+	</div>
+	<div class="form-group">
+		<label for="passwordInput">Parola</label>
+		<input class="form-control" id="passwordInput" type="password" name="password" pattern=".{8,}" required />
+	</div>
+	<div class="form-group">
+		<label for="confPasswordInput">Confirmare Parola</label>
+		<input class="form-control" id="confPasswordInput" type="password" name="conf-password" pattern=".{8,}" required />
+	</div>
+	<div class="form-group">
+		<label for="emailInput">Email</label>
+		<input class="form-control" id="emailInput" type="email" name="email" required />
+	</div>
+	<div class="form-group">
+		<label for="fullnameInput">Nume Intreg</label>
+		<input class="form-control" id="fullnameInput" type="text" name="fullname" required />
+	</div>
+	<div class="form-group">
+		<label for="cityInput">Oras</label>
+		<input class="form-control" id=""cityInput"" type="text" name="city" />
+	</div>
+	<div class="form-group">
+		<label for="districtInput">Judet</label>
+		<input class="form-control" id=""districtInput"" type="text" name="district" />
+	</div>
+	<div class="form-group">
+		<label for="phoneInput">Telefon</label>
+		<input class="form-control" id="phoneInput" type="text" name="phone" />
+	</div>
+	<button class="btn btn-primary" type="submit">Creeaza</button>
 </form>

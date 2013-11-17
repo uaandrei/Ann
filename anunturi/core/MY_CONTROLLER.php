@@ -7,6 +7,10 @@ class MY_CONTROLLER extends CI_Controller
 
 	public function __construct()
 	{
+	    if(UNDER_CONSTRUCTION){
+	        echo "Site under contruction";
+	        exit();
+	    }
 		parent::__construct();
 		$this->load->model('files_model');
 		$this->load->model('advert_model');
@@ -15,6 +19,8 @@ class MY_CONTROLLER extends CI_Controller
 		$this->load->model('user_model');
 		$this->data['error'] = '';
 		$this->layout = 'layout/_master';
+		$this->load->library('form_validation');
+		$this->form_validation->set_message('required','Introduceti o valoare pentru %s.');
 	}
 
 	public function index()
