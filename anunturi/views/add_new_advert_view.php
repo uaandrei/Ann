@@ -9,7 +9,7 @@
 	</div>
 	<div class="form-group">
 		<label for="titleInput">Titlu</label>
-		<input type="text" class="form-control" id="titleInput" name="title" maxlength="50" />
+		<input type="text" class="form-control" id="titleInput" name="title" maxlength="50" value="<?=set_value('title')?>" />
 	</div>
 	<div class="form-group">
 		<div class="row">
@@ -22,7 +22,7 @@
 			</div>
 			<div class="col-lg-2">
 				<label for="priceInput">Pret</label>
-				<input type="number" class="form-control" id="priceInput" name="price" min="0" max="99999" />
+				<input type="number" class="form-control" id="priceInput" name="price" min="0" max="99999" value="<?=set_value('price')?>" />
 			</div>
 			<div class="col-lg-2">
 				<label for="currencyInput">Moneda</label>
@@ -35,7 +35,7 @@
 	</div>
 	<div class="form-group">
 		<label for="descriptionInput">Descriere</label>
-		<textarea class="form-control" id="descriptionInput" name="description" rows="5" maxLength="100"></textarea>
+		<textarea class="form-control" id="descriptionInput" name="description" rows="5" maxLength="100" value="<?=set_value('description')?>"></textarea>
 	</div>
 	<div class="form-group">
 		<label for="districtInput">Judet</label>
@@ -51,14 +51,20 @@
 	</div>
 </form>
 <hr />
-<h1>Imagini anunt</h1>
-<form class="form-inline" method="post" action="<?=base_url().'upload/upload_file'?>" id="upload_file">
-	<div class="form-group">
-		<input class="btn btn-default" type="file" name="userfile" id="userfile" size="20" />
+
+<div class="panel panel-default">
+	<div class="panel-heading">
+		<h3 class="panel-title">Imagini anunt</h3>
+		<form class="form-inline" method="post" action="<?=base_url().'upload/upload_file'?>" id="upload_file">
+			<div class="form-group">
+				<input class="btn btn-default" type="file" name="userfile" id="userfile" size="20" />
+			</div>
+			<button id="submit" type="submit" class="btn btn-default">Adauga imagine</button>
+		</form>
 	</div>
-	<button id="submit" type="submit" class="btn btn-default">Adauga imagine</button>
-</form>
-<div class="row" id="advert-images"></div>
+	<div id="advert-images" class="panel-body">Panel content</div>
+</div>
+
 <hr />
-<div id="advert_message" class="alert alert-danger" style="display: none"></div>
+<div id="advert_message" class="alert alert-danger"><?=validation_errors();?></div>
 <button id="submitAdd" class="btn btn-primary">Adauga anunut</button>

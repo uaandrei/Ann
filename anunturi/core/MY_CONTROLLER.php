@@ -19,6 +19,8 @@ class MY_CONTROLLER extends CI_Controller
 		$this->load->model('user_model');
 		$this->data['error'] = '';
 		$this->layout = 'layout/_master';
+		$this->load->library('form_validation');
+		$this->form_validation->set_message('required','Introduceti o valoare pentru %s.');
 	}
 
 	public function index()

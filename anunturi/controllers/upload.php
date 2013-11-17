@@ -57,9 +57,10 @@ class Upload extends MY_CONTROLLER
         ));
     }
 
-    public function delete_file($file_id)
+    public function delete_file()
     {
-        // unlink delete
+        $pictureName = $this->input->post('file_name');
+        $this->files_model->delete_file($pictureName);
     }
 
     public function files()

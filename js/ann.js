@@ -44,18 +44,31 @@ var message = "";
 function isAdvertValid() {
 	message = "";
 	if (!$("#titleInput").val()) {
-		message += "Introduceti un titlu pentru anunt.<br/>";
+		message += "Introduceti o valoare pentru titlu.<br/>";
 	}
 	if (!$("#priceInput").val()) {
-		message += "Introduceti un pret pentru anunt.<br/>";
+		message += "Introduceti o valoare pentru anunt.<br/>";
 	}
 	if (!$("#priceInput").val() > 99999) {
-		message += "Ati depasit pretul maxim de 99999.<br/>";
+		message += "Valoare maxima pentru pret este 99999.<br/>";
 	}
 	if (!$("#descriptionInput").val()) {
-		message += "Introduceti o descriere pentru anunt.<br/>";
+		message += "Introduceti o valoare pentru descriere.<br/>";
 	}
 
 	var isValid = !message;
 	return isValid;
+}
+
+function deleteFile(val) {
+	$.ajax({
+		url : "/upload/delete_file",
+		type : "POST",
+		data : {
+			file_name : val
+		},
+		dataType : "html"
+	}).done(function() {
+		refresh_files();
+	});
 }

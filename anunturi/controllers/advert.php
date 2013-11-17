@@ -1,5 +1,4 @@
 <?php
-
 if (! defined('BASEPATH'))
     exit('No direct script access allowed');
 
@@ -20,9 +19,15 @@ class Advert extends MY_CONTROLLER
     {
         $this->data['active_page'] = "";
         $this->data['title'] = 'Anuntul a fost adaugat';
-        // verify data first
-        // if(datacorrect)
         
+        $this->form_validation->set_rules('title', 'titlu', 'required');
+        $this->form_validation->set_rules('description', 'descriere', 'required');
+        $this->form_validation->set_rules('price', 'pret', 'required');
+        
+        if (! $this->form_validation->run()) {
+            $this->loadView('add_new_advert_view');
+            return;
+        }
         $advertData = array(
             // 'email' => $this->input->post('email'),
             'user_id' => $this->session->userdata('user_id'),
@@ -36,6 +41,11 @@ class Advert extends MY_CONTROLLER
             'type' => $this->input->post('type'),
             'date' => date('Y-m-d H:i:s')
         );
+        
+        if(!$this->category_model->getById($advertData['category_id'])){
+            echo "Aceasta categorie nu exista.";
+            return;
+        }
         
         $advertFile['advert_id'] = $this->advert_model->insert($advertData);
         
@@ -81,11 +91,11 @@ class Advert extends MY_CONTROLLER
         $this->loadView('advert_presentation', $this->data);
     }
 
-	private function isFileForThisAdvert($file)
-	{
-		$advertGuid = $this->session->userdata('advert_guid');
-		$userId = $this->session->userdata('user_id');
-		$cmp = explode(SEP, $file);
-		return $cmp[1] == $userId && $cmp[2] == $advertGuid;
-	}
+    private function isFileForThisAdvert($file)
+    {
+        $advertGuid = $this->session->userdata('advert_guid');
+        $userId = $this->session->userdata('user_id');
+        $cmp = explode(SEP, $file);
+        return $cmp[1] == $userId && $cmp[2] == $advertGuid;
+    }
 }
