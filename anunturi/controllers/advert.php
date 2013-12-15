@@ -5,13 +5,21 @@ if (! defined('BASEPATH'))
 class Advert extends MY_CONTROLLER
 {
 
-    public function search()
+    public function search($offset = 0)
     {
         $this->data['title'] = "Rezultate cautare";
         $this->data['active_page'] = "";
         $searchEntry = $this->input->post('kwd');
         $this->data['kwd'] = $searchEntry;
-        $this->data['advertResults'] = $this->advert_model->getByTitle($searchEntry);
+        
+        $limit = 3;
+        
+        $config['base_url'] = base_url() . "advert/search";
+        $config['total_rows'] = 20;
+        $config['per_page'] = $limit;
+        $this->pagination->initialize($config);
+        
+        $this->data['advertResults'] = $this->advert_model->getByTitle($searchEntry, $limit, $offset);
         $this->loadView('advert_results_view');
     }
 
@@ -42,7 +50,7 @@ class Advert extends MY_CONTROLLER
             'date' => date('Y-m-d H:i:s')
         );
         
-        if(!$this->category_model->getById($advertData['category_id'])){
+        if (! $this->category_model->getById($advertData['category_id'])) {
             echo "Aceasta categorie nu exista.";
             return;
         }

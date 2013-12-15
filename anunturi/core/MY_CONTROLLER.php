@@ -12,6 +12,7 @@ class MY_CONTROLLER extends CI_Controller
 	        exit();
 	    }
 		parent::__construct();
+		//$this->output->enable_profiler(TRUE);
 		$this->load->model('files_model');
 		$this->load->model('advert_model');
 		$this->load->model('category_model');
@@ -20,6 +21,7 @@ class MY_CONTROLLER extends CI_Controller
 		$this->data['error'] = '';
 		$this->layout = 'layout/_master';
 		$this->load->library('form_validation');
+		$this->load->library('pagination');
 		$this->form_validation->set_message('required','Introduceti o valoare pentru %s.');
 	}
 

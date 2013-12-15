@@ -1,5 +1,4 @@
 <?php
-
 if (! defined('BASEPATH'))
     exit('No direct script access allowed');
 
@@ -23,8 +22,17 @@ class User extends MY_CONTROLLER
     {
         $userData = $this->getAddNewUserData();
         if (md5($this->input->post('conf-password')) != $userData['password']) {
-            // TODO: script for this validation.
             $this->data['error'] = 'Confirmarea parolei nu a fost corecta.';
+            $this->newUser();
+            return;
+        }
+        if ($this->user_model->emailExists($userData['email'])) {
+            $this->data['error'] = 'Acest email este deja folosit pentru un utilizator.';
+            $this->newUser();
+            return;
+        }
+        if ($this->user_model->userExists($userData['username'])) {
+            $this->data['error'] = 'Acest nume de utilizator este deja folosit.';
             $this->newUser();
             return;
         }

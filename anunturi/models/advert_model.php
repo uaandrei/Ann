@@ -30,7 +30,7 @@ class Advert_Model extends MY_MODEL
         return $this->db->query($sql, $categoryId)->result();
     }
 
-    function getByTitle($searchEntry)
+    function getByTitle($searchEntry, $limit, $offset)
     {
         // TODO: pune max pe $searchEntry
         // verificare empty undeva, NU AICI
@@ -49,7 +49,7 @@ class Advert_Model extends MY_MODEL
                     group by advert_id) t
                 on t.advert_id = adverts.id
                 join files on files.id = file_id
-                where title like '%" . $this->db->escape_like_str($searchEntry) . "%'";
+                where title like '%" . $this->db->escape_like_str($searchEntry) . "%' limit $offset, $limit";
         return $this->db->query($sql)->result();
     }
 }
