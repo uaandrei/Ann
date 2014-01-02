@@ -1,4 +1,4 @@
-<div class="navbar navbar-fixed-top navbar-inverse" role="navigation">
+<nav class="navbar navbar-fixed-top navbar-inverse" role="navigation">
 	<div class="container">
 		<div class="navbar-header">
 			<button type="button" class="navbar-toggle" data-toggle="collapse" data-target=".navbar-collapse">
@@ -6,15 +6,12 @@
 				<span class="icon-bar"></span>
 				<span class="icon-bar"></span>
 			</button>
-			<a class="navbar-brand" href="#">
+			<a class="navbar-brand" href="<?php echo base_url()?>advert/index">
 				<strong style="font-family: cursive; font-size: larger; color: darkorange;">up.ro</strong>
 			</a>
 		</div>
 		<div class="collapse navbar-collapse">
 			<ul class="nav navbar-nav">
-				<li class="<?php if($active_page == 'index') echo 'active'?>">
-					<a href="<?php echo base_url()?>advert/index">Acasa</a>
-				</li>
 				<li class="<?php if($active_page == 'newAdvert') echo 'active'?>">
 					<a href="<?php echo base_url();?>user/newAdvert">Adauga Anunt</a>
 				</li>
@@ -49,4 +46,4 @@
 			</ul>
 		</div>
 	</div>
-</div>
+</nav>

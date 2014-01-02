@@ -1,8 +1,8 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-<title><?php echo $title;?>
-</title>
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title><?php echo $title;?></title>
 <link rel="stylesheet" href="<?=base_url()?>css/ann.css">
 <link rel="stylesheet" href="<?=base_url()?>css/bootstrap.min.css">
 <link rel="stylesheet" href="<?=base_url()?>css/bootover.css">
@@ -18,9 +18,9 @@
 	<div class="container">
 		<div class="row row-offcanvas row-offcanvas-right">
 			<?php $this->load->view("layout/sidebar");?>
-			<div class="col-xs-12 col-sm-9">
+			<div class="col-sm-8">
 				<p class="pull-right visible-xs">
-					<button type="button" class="btn btn-primary btn-xs" data-toggle="offcanvas">Toggle nav</button>
+					<button type="button" class="btn btn-primary navbar-toggle" data-toggle="offcanvas" style="z-index: 1; background: blue;">Toggle nav</button>
 				</p>
 				<div class="row">
 					<?php $this->load->view($content); ?>

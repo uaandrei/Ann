@@ -1,4 +1,4 @@
-<div class="col-xs-6 col-sm-3 sidebar-offcanvas" id="sidebar" role="navigation">
+<div class="col-sm-4 sidebar-offcanvas" id="sidebar" role="navigation">
 	<div class="well sidebar-nav">
 		<ul class="nav">
 			<li class="nav-header">CATEGORII</li>
