@@ -1,21 +1,18 @@
 <div class="col-sm-4 sidebar-offcanvas" id="sidebar" role="navigation">
 	<div class="well sidebar-nav">
-		<ul class="nav">
+		<ul class="nav nav-pills nav-stacked">
 			<li class="nav-header">CATEGORII</li>
-			<?php
-                foreach ($categories as $category) {
-                    echo '<li';
-                    if ($active_page == $category->id) {
-                        echo ' class="active"';
-                    }
-                    echo '><a href="' . base_url() . 'advert/category/' . $category->id . '">';
-                    if (! is_null($category->icon)) {
-                        echo '<i class="' . $category->icon . '"></i>';
-                    }
-                    echo "&nbsp;" . $category->name;
-                    echo '</a></li>';
-                }
-            ?>
+			<?php foreach ($categories as $category): ?>
+    			<?php if($active_page == $category->id): ?>
+    			<li class="active">
+    		    <?php else: ?>
+    		    <li>
+    		    <?php endif;?>
+                   <a href="<?=base_url()?>advert/category?c_id=<?=$category->id?>">
+    					<i class="<?=$category->icon?>"></i>&nbsp;<?=$category->name?>	               
+    	           </a>
+    			</li>
+			<?php endforeach;?>
 		</ul>
 	</div>
 </div>

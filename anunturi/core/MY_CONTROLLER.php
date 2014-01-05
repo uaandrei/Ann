@@ -12,7 +12,7 @@ class MY_CONTROLLER extends CI_Controller
 	        exit();
 	    }
 		parent::__construct();
-		//$this->output->enable_profiler(TRUE);
+// 		$this->output->enable_profiler(TRUE);
 		$this->load->model('files_model');
 		$this->load->model('advert_model');
 		$this->load->model('category_model');

@@ -12,14 +12,38 @@ class Advert extends MY_CONTROLLER
         $searchEntry = $this->input->post('kwd');
         $this->data['kwd'] = $searchEntry;
         
-        $limit = 3;
-        
+        $limit = 10;
+        $this->data['advertResults'] = $this->advert_model->getByTitle($searchEntry, $limit, $offset);
         $config['base_url'] = base_url() . "advert/search";
-        $config['total_rows'] = 20;
+        $config['total_rows'] = $this->db->like('title', $searchEntry)
+            ->from(ADVERT_TABLE)
+            ->count_all_results();
+        $config['per_page'] = $limit;
+        $this->pagination->initialize($config);
+        $this->loadView('advert_results_view');
+    }
+
+    public function category($offset = 0)
+    {
+        $id = $this->input->get('c_id');
+        if ($id) {
+            $this->session->set_userdata('c_id', $id);
+        }else{
+            $id = $this->session->userdata('c_id');
+        }
+        $limit = 10;
+        
+        $this->data['active_page'] = $id;
+        $this->data['title'] = 'Rezultate ' . $id;
+        $this->data['advertResults'] = $this->advert_model->getByCategoryId($id, $limit, $offset);
+        
+        $config['base_url'] = base_url() . "advert/category";
+        $config['total_rows'] = $this->db->where("category_id", $id)
+            ->from(ADVERT_TABLE)
+            ->count_all_results();
         $config['per_page'] = $limit;
         $this->pagination->initialize($config);
         
-        $this->data['advertResults'] = $this->advert_model->getByTitle($searchEntry, $limit, $offset);
         $this->loadView('advert_results_view');
     }
 
@@ -79,21 +103,11 @@ class Advert extends MY_CONTROLLER
         // fail;
     }
 
-    public function category($categoryId)
-    {
-        // redirect if categoryId doesn't exist
-        $this->data['active_page'] = $categoryId;
-        $this->data['title'] = 'Rezultate ' . $categoryId;
-        $category = $this->advert_model->getByCategoryId($categoryId);
-        $this->data['advertResults'] = $category;
-        $this->loadView('advert_results_view');
-    }
-
     public function show($advertId)
     {
-        $this->data['active_page'] = "";
         $this->data['title'] = 'Vizualizare anunt';
         $this->data['advert'] = $this->advert_model->getById($advertId);
+        $this->data['active_page'] = $this->data['advert']->category_id;
         $this->data['advert_files'] = $this->advert_files_model->getFilesForAdvert($advertId);
         $this->data['user_data'] = $this->user_model->getById($this->data['advert']->user_id);
         $this->loadView('advert_presentation', $this->data);
