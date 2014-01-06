@@ -78,7 +78,7 @@ class User extends MY_CONTROLLER
             $this->session->set_userdata('advert_guid', uniqid());
             $this->loadView('add_new_advert_view');
         } else {
-            $this->data['error'] = 'Va rugam sa va autentificati pentru a post un anunt.';
+            $this->data['error'] = 'Va rugam sa va autentificati pentru a posta un anunt.';
             $this->login();
         }
     }
