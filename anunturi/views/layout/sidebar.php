@@ -1,18 +1,15 @@
 <div class="col-sm-4 sidebar-offcanvas" id="sidebar" role="navigation">
 	<div class="well sidebar-nav">
-		<ul class="nav nav-pills nav-stacked">
-			<li class="nav-header">CATEGORII</li>
-			<?php foreach ($categories as $category): ?>
-    			<?php if($active_page == $category->id): ?>
-    			<li class="active">
-    		    <?php else: ?>
-    		    <li>
-    		    <?php endif;?>
-                   <a href="<?=base_url()?>advert/category?c_id=<?=$category->id?>">
-    					<i class="<?=$category->icon?>"></i>&nbsp;<?=$category->name?>	               
-    	           </a>
-    			</li>
-			<?php endforeach;?>
-		</ul>
+		<span class="label label-success">CATEGORII</span>
+		<?php foreach ($main_categories as $category): ?>
+		       <h5><?=$category->name?></h5>
+		       <?php if($this->category_model->hasSubcategories($category->id)):?>
+		       <div class="list-group">
+    	           <?php foreach($this->category_model->getSubcategories($category->id) as $subcategory): ?>
+    	               <?php $this->load->view('partial/_category_item_view', array('selected_category'=> $active_page, 'category'=>$subcategory)) ?>
+    	           <?php endforeach; ?>
+    	       </div>
+	           <?php endif;?>
+		<?php endforeach;?>
 	</div>
 </div>

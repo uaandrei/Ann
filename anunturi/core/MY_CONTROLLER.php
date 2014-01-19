@@ -59,7 +59,7 @@ class MY_CONTROLLER extends CI_Controller
 
 	protected function loadView($view_name)
 	{
-		$this->data['categories'] = $this->category_model->getAll();
+		$this->data['main_categories'] = $this->category_model->getMainCategories();
 		$this->checkIfUserDataIsSet();
 		$this->data['is_logged'] = $this->session->userdata('is_logged');
 		$this->data['username'] = $this->session->userdata('username');
