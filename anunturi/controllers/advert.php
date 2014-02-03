@@ -14,6 +14,7 @@ class Advert extends MY_CONTROLLER
         
         $limit = 10;
         $this->data['advertResults'] = $this->advert_model->getByTitle($searchEntry, $limit, $offset);
+        $config = $this->getPaginationConfigForBoostrap();
         $config['base_url'] = base_url() . "advert/search";
         $config['total_rows'] = $this->db->like('title', $searchEntry)
             ->from(ADVERT_TABLE)
@@ -28,7 +29,7 @@ class Advert extends MY_CONTROLLER
         $id = $this->input->get('c_id');
         if ($id) {
             $this->session->set_userdata('c_id', $id);
-        }else{
+        } else {
             $id = $this->session->userdata('c_id');
         }
         $limit = 10;
@@ -37,6 +38,7 @@ class Advert extends MY_CONTROLLER
         $this->data['title'] = 'Rezultate ' . $id;
         $this->data['advertResults'] = $this->advert_model->getByCategoryId($id, $limit, $offset);
         
+        $config = $this->getPaginationConfigForBoostrap();
         $config['base_url'] = base_url() . "advert/category";
         $config['total_rows'] = $this->db->where("category_id", $id)
             ->from(ADVERT_TABLE)
@@ -119,5 +121,29 @@ class Advert extends MY_CONTROLLER
         $userId = $this->session->userdata('user_id');
         $cmp = explode(SEP, $file);
         return $cmp[1] == $userId && $cmp[2] == $advertGuid;
+    }
+
+    private function getPaginationConfigForBoostrap()
+    {
+        return array(
+            'full_tag_open' => '<ul class="pagination">',
+            'full_tag_close' => '</ul>',
+            'first_tag_open' => '<li>',
+            'first_link' => '&laquo;',
+            'first_tag_close' => '</li>',
+            'last_tag_open' => '<li>',
+            'last_link' => '&raquo;',
+            'last_tag_close' => '</li>',
+            'next_tag_open' => '<li>',
+            'next_link' => 'Inainte',
+            'next_tag_close' => '</li>',
+            'prev_tag_open' => '<li>',
+            'prev_link' => 'Inapoi',
+            'prev_tag_close' => '</li>',
+            'cur_tag_open' => '<li class="active"><a href="#">',
+            'cur_tag_close' => '<span class="sr-only">(current)</span></a></li>',
+            'num_tag_open' => '<li>',
+            'num_tag_close' => '</li>'
+        );
     }
 }
