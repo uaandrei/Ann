@@ -3,8 +3,8 @@
 <head>
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title><?php echo $title;?></title>
-<link rel="stylesheet" href="<?=base_url()?>css/ann.css">
-<link rel="stylesheet" href="<?=base_url()?>css/bootstrap.min.css">
+<link rel="stylesheet" href="<?=base_url()?>vendor/bootstrap-3.1.0/dist/css/ann.css">
+<link rel="stylesheet" href="<?=base_url()?>vendor/bootstrap-3.1.0/dist/css/bootstrap.min.css">
 <link rel="stylesheet" href="<?=base_url()?>css/bootover.css">
 <link rel="stylesheet" href="<?=base_url()?>css/offcanvas.css">
 <link rel="stylesheet" href="<?=base_url()?>css/normalize.css">
@@ -33,7 +33,7 @@
 		</footer>
 	</div>
 	<script src="//ajax.googleapis.com/ajax/libs/jquery/1.10.2/jquery.min.js"></script>
-	<script src="<?=base_url()?>js/bootstrap.min.js"></script>
+	<script src="<?=base_url()?>vendor/bootstrap-3.1.0/dist/js/bootstrap.min.js"></script>
 	<script src="<?=base_url().'js/ajaxfileupload.js'?>"></script>
 	<script src="<?=base_url()?>js/lightbox-2.6.min.js"></script>
 	<script src="<?=base_url()?>js/offcanvas.js"></script>
