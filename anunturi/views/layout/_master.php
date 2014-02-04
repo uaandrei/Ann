@@ -28,9 +28,11 @@
 			</div>
 		</div>
 		<hr>
-		<footer>
-			<p>&copy; Company 2013</p>
-		</footer>
+	</div>
+	<div id="footer">
+		<div class="container">
+			<p class="text-muted">&copy; Company 2013.</p>
+		</div>
 	</div>
 	<script src="//ajax.googleapis.com/ajax/libs/jquery/1.10.2/jquery.min.js"></script>
 	<script src="<?=base_url()?>vendor/bootstrap-3.1.0/dist/js/bootstrap.min.js"></script>
