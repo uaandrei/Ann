@@ -2,8 +2,12 @@
 	<div class="form-group">
 		<label for="categoryInput">Categorie</label>
 		<select class="form-control" id="categoryInput" name="category">
-			<?php foreach ($categories as $category): ?>
-                <option value='<?=$category->id?>'><?=$category->name?></option>
+            <?php foreach ($main_categories as $category): ?>
+                <optgroup label="<?=$category->name?>">
+                    <?php foreach($this->category_model->getSubcategories($category->id) as $subcategory): ?>     
+                        <option value='<?=$subcategory->id?>'><?=$subcategory->name?></option>
+                    <?php endforeach;?>
+			    </optgroup>
 			<?php endforeach;?>
 		</select>
 	</div>
@@ -66,5 +70,5 @@
 </div>
 
 <hr />
-<div id="advert_message" class="alert alert-danger"><?=validation_errors();?></div>
+<div id="advert_message" class="alert alert-danger"><?=validation_errors();?><?=$error?></div>
 <button id="submitAdd" class="btn btn-primary">Adauga anunut</button>

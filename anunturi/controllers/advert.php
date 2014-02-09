@@ -84,7 +84,9 @@ class Advert extends MY_CONTROLLER
         $advertFile['advert_id'] = $this->advert_model->insert($advertData);
         
         $files = scandir(UPLOAD_DIR);
+        
         $dest = './data/';
+        $numberOfPicturesForAdvert = 0;
         foreach ($files as $file) {
             if (in_array($file, array(
                 '.',
@@ -93,16 +95,21 @@ class Advert extends MY_CONTROLLER
                 continue;
             if (! $this->isFileForThisAdvert($file))
                 continue;
+            $numberOfPicturesForAdvert++;
             $data['filename'] = $file;
             copy(UPLOAD_DIR . $file, $dest . $data['filename']);
             unlink(UPLOAD_DIR . $file);
             $advertFile['file_id'] = $this->files_model->insert($data);
             $this->advert_files_model->insert($advertFile);
         }
+
+        if($numberOfPicturesForAdvert < 1){
+            $this->data['error'] = 'Anuntul trebuie sa contina cel putin o poza.';
+            $this->loadView('add_new_advert_view');
+            return;
+        }
         
         $this->loadView('advert_created_view');
-        // else
-        // fail;
     }
 
     public function show($advertId)
