@@ -12,5 +12,5 @@
 <?php endforeach; ?>
 </div>
 <?php else:?>
-<p>No Files Uploaded</p>
+<p>Nu ati uploadat nicio imagine</p>
 <?php endif;?>

@@ -66,6 +66,7 @@
 			<button id="submit" type="submit" class="btn btn-default">Adauga imagine</button>
 		</form>
 	</div>
+	<div class="alert alert-info">Rezolutie maxima 1024x768, dimensiune maxima 2MB.</div>
 	<div id="advert-images" class="panel-body">Panel content</div>
 </div>
 

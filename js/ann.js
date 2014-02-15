@@ -8,11 +8,14 @@ $(document).ready(function() {
 			secureuri : false,
 			fileElementId : 'userfile',
 			dataType : 'json',
-			success : function(data, status) {
-				if (data.status != 'error') {
-					$('#advert-images').html('<p>Reloading files...</p>');
+			success : function(data) {
+				var returnedData = JSON.parse(data);
+				if (returnedData.status != 'error') {
+					$('#advert-images').html('<p>Se incarca imaginile...</p>');
 					refresh_files();
 					$('#title').val('');
+				} else {
+					$('#advert-images').append('<div class="alert alert-danger">Imaginea nu respecta formatul admis.</div>');
 				}
 			}
 		});

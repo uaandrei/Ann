@@ -22,7 +22,9 @@ class Upload extends MY_CONTROLLER
         
         $configUpload['upload_path'] = UPLOAD_DIR;
         $configUpload['allowed_types'] = 'jpg|png|jpeg';
-        $configUpload['max_size'] = 500;
+        $configUpload['max_size'] = '2048';
+		$configUpload['max_width']  = '1024';
+		$configUpload['max_height']  = '768';
         $fileDate = date('siHdmY');
         $advertGuid = $this->session->userdata('advert_guid');
         $fileGuid = uniqid();
