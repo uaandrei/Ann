@@ -10,3 +10,4 @@
 	</div>
 	<button type="submit" class="btn btn-primary">Login</button>
 </form>
+<a class="btn btn-primary" role="button" href="<?=base_url().'user/newUser'?>">Inregistrare</a>
