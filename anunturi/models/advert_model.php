@@ -17,6 +17,7 @@ class Advert_Model extends MY_MODEL
         $this->db->from($this->tableName);
         $this->db->where('category_id', $categoryId);
         $this->db->limit($limit, $offset);
+        $this->db->order_by('date', 'desc');
         return $this->db->get()->result();
     }
 
@@ -26,6 +27,7 @@ class Advert_Model extends MY_MODEL
         $this->db->from($this->tableName);
         $this->db->like('title', $searchEntry);
         $this->db->limit($limit, $offset);
+        $this->db->order_by('date', 'asc');
         return $this->db->get()->result();
     }
 
