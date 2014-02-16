@@ -67,29 +67,8 @@ class Upload extends MY_CONTROLLER
 
     public function files()
     {
-        $files = scandir(UPLOAD_DIR);
-        $thumbs = array();
-        foreach ($files as $file) {
-            if (in_array($file, array(
-                '.',
-                '..'
-            )))
-                continue;
-            if (! $this->isFileForThisAdvert($file))
-                continue;
-            if(strpos($file, "thumb")){
-                array_push($thumbs, $file);
-            }
-        }
+        $thumbs = $this->getFilesUploadedForCurrentAdvert("thumb");
         $data['files'] = $thumbs;
         $this->load->view('files', $data);
     }
-
-	private function isFileForThisAdvert($file)
-	{
-		$advertGuid = $this->session->userdata('advert_guid');
-		$userId = $this->session->userdata('user_id');
-		$cmp = explode(SEP, $file);
-		return $cmp[1] == $userId && $cmp[2] == $advertGuid;
-	}
 }
