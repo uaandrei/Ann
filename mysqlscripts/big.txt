@@ -1,10 +1,95 @@
-﻿# Insert categories
+#Contains create && alter && dummy
+
+use anunturi;
+
+drop table if exists `advert_files`;
+drop table if exists `adverts`;
+drop table if exists `categories`;
+drop table if exists `files`;
+drop table if exists `users`;
+
+###############
+create table `users` (
+    `id` int not null primary key auto_increment,
+    `username` varchar(50) not null unique,
+    `password` varchar(50) not null,
+    `email` varchar(50) not null unique,
+    `fullname` varchar(50) not null,
+    `city` varchar(50),
+    `district` varchar(50),
+    `phone` varchar(15) not null
+) engine=innodb auto_increment=1;
+
+CREATE TABLE `files` (
+    `id` int(11) NOT NULL AUTO_INCREMENT PRIMARY KEY,
+    `filename` varchar(255) NOT NULL
+) ENGINE=InnoDB AUTO_INCREMENT=1;
+
+CREATE TABLE `categories` (
+    `id` int(11) NOT NULL AUTO_INCREMENT PRIMARY KEY,
+    `name` varchar(55) NOT NULL,
+    `icon` varchar(50) DEFAULT NULL,
+    UNIQUE KEY `name` (`name`),
+    UNIQUE KEY `id` (`id`),
+    UNIQUE KEY `id_2` (`id`))
+ENGINE=InnoDB AUTO_INCREMENT=1;
+
+create table `adverts` (
+    id int(11) not null auto_increment primary key,
+    category_id int(11) not null,
+    `user_id` int not null,
+    district varchar(50) not null,
+    city varchar(100) not null,
+    type varchar(10) not null,
+    title varchar(50) not null,
+    description varchar(100) not null,
+    price decimal(10,0) not null,
+    currency varchar(3) not null,
+    `date` datetime not null,
+    constraint `adverts_fk_user` foreign key (`user_id`) references `users` (`id`),
+    constraint `adverts_fk_category` foreign key(`category_id`) references `categories` (`id`)
+) engine=innodb auto_increment=1;
+
+CREATE TABLE `advert_files` (
+    `id` int(11) NOT NULL AUTO_INCREMENT PRIMARY KEY,
+    `file_id` int(11) NOT NULL,
+    `advert_id` int(11) NOT NULL,
+    CONSTRAINT `advert_fk` FOREIGN KEY (`advert_id`) REFERENCES `adverts` (`id`),
+    CONSTRAINT `file_fk` FOREIGN KEY (`file_id`) REFERENCES `files` (`id`)
+) ENGINE=InnoDB AUTO_INCREMENT=1;
+
+alter table categories add column parent_id int(11) default 0 after id;
+
+# Insert categories
 insert into categories (name,icon)
 	values ("Telefoane","glyphicon glyphicon-briefcase");
 insert into categories (name,icon)
 	values ("Imobile","glyphicon glyphicon-home");
 insert into categories (name,icon)
 	values ("Multimedia","glyphicon glyphicon-play");
+	
+#Insert subcatergories	
+insert into categories (parent_id, name, icon)
+		values (1, 'Noi', 'glyphicon glyphicon-briefcase');
+insert into categories (parent_id, name, icon)
+		values (1, 'Second', 'glyphicon glyphicon-briefcase');
+insert into categories (parent_id, name, icon)
+		values (2, 'Apartamente', 'glyphicon glyphicon-briefcase');
+insert into categories (parent_id, name, icon)
+		values (2, 'Garsoniere', 'glyphicon glyphicon-briefcase');
+insert into categories (parent_id, name, icon)
+		values (3, 'Filme', 'glyphicon glyphicon-briefcase');
+insert into categories (parent_id, name, icon)
+		values (3, 'Aparate foto/video', 'glyphicon glyphicon-briefcase');
+
+	
+# Insert users
+INSERT INTO `users` (`id`, `username`, `password`, `email`, `fullname`, `city`, `district`, `phone`) VALUES
+(1, 'andrei', '5416d7cd6ef195a0f7622a9c56b55e84', 'ua.andrei@gmail.com', 'Ursta A Andrei Alexandru', 'Brasov', '123', '40743215090');
+INSERT INTO `users` (`id`, `username`, `password`, `email`, `fullname`, `city`, `district`, `phone`) VALUES
+(2, 'andrei2', '5416d7cd6ef195a0f7622a9c56b55e84', 'ua.andrei2@gmail.com', 'Ursta A Andrei Alexandru', 'Brasov', '123', '40743215090');
+INSERT INTO `users` (`id`, `username`, `password`, `email`, `fullname`, `city`, `district`, `phone`) VALUES
+(3, 'andrei3', '5416d7cd6ef195a0f7622a9c56b55e84', 'ua.andrei3@gmail.com', 'Ursta A Andrei Alexandru', 'Brasov', '123', '40743215090');
 
 # Insert adverts
 INSERT INTO `adverts` (`category_id`,`user_id`,`district`,`city`,`type`,`title`,`description`,`price`,`currency`,`date`) VALUES (2,"3","Vienna","Vienna","Cerere","lectus. Nullam suscipit, est ac facilisis","Donec vitae erat vel pede blandit congue. In scelerisque scelerisque dui. Suspendisse ac metus vitae velit egestas lacinia. Sed congue, elit sed consequat auctor, nunc",4294,"EUR","2014-03-19 05:52:18");
@@ -26,7 +111,7 @@ INSERT INTO `adverts` (`category_id`,`user_id`,`district`,`city`,`type`,`title`,
 INSERT INTO `adverts` (`category_id`,`user_id`,`district`,`city`,`type`,`title`,`description`,`price`,`currency`,`date`) VALUES (1,"1","Northamptonshire","Corby","Cerere","enim. Suspendisse aliquet, sem ut cursus luctus, ipsum","ridiculus mus. Aenean eget magna. Suspendisse tristique neque venenatis lacus. Etiam bibendum fermentum metus. Aenean sed pede nec ante blandit viverra. Donec",509,"EUR","2013-11-23 14:12:04");
 INSERT INTO `adverts` (`category_id`,`user_id`,`district`,`city`,`type`,`title`,`description`,`price`,`currency`,`date`) VALUES (1,"3","Lombardia","Blevio","Cerere","eget nisi dictum augue malesuada","In lorem. Donec elementum, lorem ut aliquam iaculis, lacus pede sagittis augue, eu tempor erat neque non",2293,"EUR","2014-04-30 18:18:50");
 INSERT INTO `adverts` (`category_id`,`user_id`,`district`,`city`,`type`,`title`,`description`,`price`,`currency`,`date`) VALUES (4,"1","Euskadi","Donosti","Oferta","convallis dolor. Quisque tincidunt pede ac","nascetur ridiculus mus. Proin vel nisl. Quisque fringilla euismod enim. Etiam gravida molestie arcu. Sed eu nibh vulputate mauris sagittis placerat. Cras dictum ultricies ligula. Nullam enim. Sed nulla",1683,"EUR","2013-02-23 21:44:49");
-INSERT INTO `adverts` (`category_id`,`user_id`,`district`,`city`,`type`,`title`,`description`,`price`,`currency`,`date`) VALUES (3,"1","ÃŽ","Courbevoie","Cerere","risus odio, auctor vitae, aliquet nec, imperdiet","eros turpis non enim. Mauris quis turpis vitae purus gravida sagittis. Duis gravida. Praesent eu nulla at sem molestie sodales. Mauris blandit enim consequat purus. Maecenas libero est, congue a,",1526,"EUR","2014-08-11 17:12:14");
+INSERT INTO `adverts` (`category_id`,`user_id`,`district`,`city`,`type`,`title`,`description`,`price`,`currency`,`date`) VALUES (3,"1","Î","Courbevoie","Cerere","risus odio, auctor vitae, aliquet nec, imperdiet","eros turpis non enim. Mauris quis turpis vitae purus gravida sagittis. Duis gravida. Praesent eu nulla at sem molestie sodales. Mauris blandit enim consequat purus. Maecenas libero est, congue a,",1526,"EUR","2014-08-11 17:12:14");
 INSERT INTO `adverts` (`category_id`,`user_id`,`district`,`city`,`type`,`title`,`description`,`price`,`currency`,`date`) VALUES (1,"3","Bretagne","Saint-Brieuc","Cerere","a purus. Duis elementum, dui quis","vel, mauris. Integer sem elit, pharetra ut, pharetra sed, hendrerit a, arcu. Sed et libero. Proin mi.",1380,"RON","2014-02-04 09:16:36");
 INSERT INTO `adverts` (`category_id`,`user_id`,`district`,`city`,`type`,`title`,`description`,`price`,`currency`,`date`) VALUES (3,"1","Namen","Vedrin","Cerere","aliquam arcu. Aliquam ultrices iaculis","quis, tristique ac, eleifend vitae, erat. Vivamus nisi. Mauris nulla. Integer urna. Vivamus molestie dapibus ligula. Aliquam erat volutpat. Nulla dignissim. Maecenas",4020,"EUR","2013-07-26 21:28:07");
 INSERT INTO `adverts` (`category_id`,`user_id`,`district`,`city`,`type`,`title`,`description`,`price`,`currency`,`date`) VALUES (1,"3","KC","Banchory","Oferta","orci tincidunt adipiscing. Mauris molestie pharetra nibh. Aliquam","ultricies adipiscing, enim mi tempor lorem, eget mollis lectus pede et risus. Quisque libero lacus, varius et, euismod et, commodo at, libero. Morbi accumsan laoreet ipsum. Curabitur consequat,",3719,"EUR","2013-01-30 23:58:09");
@@ -40,26 +125,26 @@ INSERT INTO `adverts` (`category_id`,`user_id`,`district`,`city`,`type`,`title`,
 INSERT INTO `adverts` (`category_id`,`user_id`,`district`,`city`,`type`,`title`,`description`,`price`,`currency`,`date`) VALUES (3,"3","DE","Dover","Oferta","Nunc sed orci lobortis augue","at augue id ante dictum cursus. Nunc mauris elit, dictum eu, eleifend nec, malesuada ut, sem. Nulla interdum. Curabitur dictum.",3383,"EUR","2014-06-30 08:36:28");
 INSERT INTO `adverts` (`category_id`,`user_id`,`district`,`city`,`type`,`title`,`description`,`price`,`currency`,`date`) VALUES (4,"3","G","Liberia","Cerere","risus. Donec egestas. Aliquam nec enim. Nunc ut","ante, iaculis nec, eleifend non, dapibus rutrum, justo. Praesent luctus. Curabitur egestas nunc sed libero. Proin sed turpis nec",3254,"EUR","2014-07-01 07:35:49");
 INSERT INTO `adverts` (`category_id`,`user_id`,`district`,`city`,`type`,`title`,`description`,`price`,`currency`,`date`) VALUES (4,"1","L","Siquirres","Cerere","fringilla ornare placerat, orci lacus vestibulum lorem, sit","Cum sociis natoque penatibus et magnis dis parturient montes, nascetur ridiculus mus. Proin vel nisl. Quisque fringilla euismod enim. Etiam gravida molestie",3209,"EUR","2013-12-17 14:05:13");
-INSERT INTO `adverts` (`category_id`,`user_id`,`district`,`city`,`type`,`title`,`description`,`price`,`currency`,`date`) VALUES (3,"1","Madrid","TorrejÃ³n de Ardoz","Cerere","Mauris vel turpis. Aliquam adipiscing lobortis risus.","quis turpis vitae purus gravida sagittis. Duis gravida. Praesent eu nulla at sem molestie sodales. Mauris blandit enim consequat purus. Maecenas libero est, congue a,",1556,"RON","2013-01-30 15:06:42");
+INSERT INTO `adverts` (`category_id`,`user_id`,`district`,`city`,`type`,`title`,`description`,`price`,`currency`,`date`) VALUES (3,"1","Madrid","Torrejón de Ardoz","Cerere","Mauris vel turpis. Aliquam adipiscing lobortis risus.","quis turpis vitae purus gravida sagittis. Duis gravida. Praesent eu nulla at sem molestie sodales. Mauris blandit enim consequat purus. Maecenas libero est, congue a,",1556,"RON","2013-01-30 15:06:42");
 INSERT INTO `adverts` (`category_id`,`user_id`,`district`,`city`,`type`,`title`,`description`,`price`,`currency`,`date`) VALUES (2,"1","WB","Ottignies","Cerere","purus sapien, gravida non, sollicitudin a, malesuada","posuere cubilia Curae; Phasellus ornare. Fusce mollis. Duis sit amet diam eu dolor egestas rhoncus. Proin nisl sem, consequat nec, mollis vitae, posuere at, velit.",4893,"EUR","2014-07-13 06:28:38");
 INSERT INTO `adverts` (`category_id`,`user_id`,`district`,`city`,`type`,`title`,`description`,`price`,`currency`,`date`) VALUES (3,"1","Marche","Penna San Giovanni","Oferta","posuere cubilia Curae; Donec","in, hendrerit consectetuer, cursus et, magna. Praesent interdum ligula eu enim. Etiam imperdiet dictum magna. Ut tincidunt orci quis lectus. Nullam",1396,"EUR","2013-11-02 08:22:56");
 INSERT INTO `adverts` (`category_id`,`user_id`,`district`,`city`,`type`,`title`,`description`,`price`,`currency`,`date`) VALUES (2,"1","Iowa","Cedar Rapids","Cerere","elit. Etiam laoreet, libero et","dis parturient montes, nascetur ridiculus mus. Proin vel arcu eu odio tristique pharetra. Quisque ac libero nec ligula consectetuer rhoncus. Nullam velit dui,",3201,"RON","2013-01-08 08:10:22");
 INSERT INTO `adverts` (`category_id`,`user_id`,`district`,`city`,`type`,`title`,`description`,`price`,`currency`,`date`) VALUES (3,"3","Noord Holland","Hoofddorp","Cerere","ut erat. Sed nunc","Quisque libero lacus, varius et, euismod et, commodo at, libero. Morbi accumsan laoreet ipsum. Curabitur consequat, lectus sit amet luctus vulputate, nisi",868,"EUR","2014-02-20 08:50:57");
 INSERT INTO `adverts` (`category_id`,`user_id`,`district`,`city`,`type`,`title`,`description`,`price`,`currency`,`date`) VALUES (4,"1","Staffordshire","Lichfield","Oferta","Sed pharetra, felis eget varius","purus sapien, gravida non, sollicitudin a, malesuada id, erat. Etiam vestibulum massa rutrum magna. Cras convallis convallis dolor. Quisque tincidunt pede ac urna. Ut tincidunt vehicula risus. Nulla",1610,"EUR","2013-05-01 04:31:57");
 INSERT INTO `adverts` (`category_id`,`user_id`,`district`,`city`,`type`,`title`,`description`,`price`,`currency`,`date`) VALUES (3,"1","DE","Newark","Cerere","torquent per conubia nostra,","scelerisque dui. Suspendisse ac metus vitae velit egestas lacinia. Sed congue, elit sed consequat auctor, nunc nulla vulputate dui, nec tempus mauris",2038,"EUR","2014-09-01 10:59:29");
-INSERT INTO `adverts` (`category_id`,`user_id`,`district`,`city`,`type`,`title`,`description`,`price`,`currency`,`date`) VALUES (3,"3","Castilla y LeÃ³n","Soria","Cerere","quam. Curabitur vel lectus.","consequat purus. Maecenas libero est, congue a, aliquet vel, vulputate eu, odio. Phasellus at augue id ante dictum cursus. Nunc mauris",4548,"EUR","2014-09-05 08:26:15");
+INSERT INTO `adverts` (`category_id`,`user_id`,`district`,`city`,`type`,`title`,`description`,`price`,`currency`,`date`) VALUES (3,"3","Castilla y León","Soria","Cerere","quam. Curabitur vel lectus.","consequat purus. Maecenas libero est, congue a, aliquet vel, vulputate eu, odio. Phasellus at augue id ante dictum cursus. Nunc mauris",4548,"EUR","2014-09-05 08:26:15");
 INSERT INTO `adverts` (`category_id`,`user_id`,`district`,`city`,`type`,`title`,`description`,`price`,`currency`,`date`) VALUES (5,"1","Victoria","Mildura","Oferta","mi. Aliquam gravida mauris ut mi. Duis","consectetuer euismod est arcu ac orci. Ut semper pretium neque. Morbi quis urna. Nunc quis",1556,"RON","2014-11-20 08:10:11");
 INSERT INTO `adverts` (`category_id`,`user_id`,`district`,`city`,`type`,`title`,`description`,`price`,`currency`,`date`) VALUES (3,"3","SA","Shrewsbury","Cerere","consectetuer, cursus et, magna. Praesent interdum ligula eu","interdum ligula eu enim. Etiam imperdiet dictum magna. Ut tincidunt orci quis lectus. Nullam suscipit, est ac facilisis facilisis, magna tellus faucibus",1053,"EUR","2013-12-27 04:39:55");
 INSERT INTO `adverts` (`category_id`,`user_id`,`district`,`city`,`type`,`title`,`description`,`price`,`currency`,`date`) VALUES (1,"1","Dr","Assen","Oferta","et, lacinia vitae, sodales at, velit.","vulputate eu, odio. Phasellus at augue id ante dictum cursus. Nunc mauris elit, dictum eu, eleifend nec,",4606,"RON","2014-04-22 09:48:01");
 INSERT INTO `adverts` (`category_id`,`user_id`,`district`,`city`,`type`,`title`,`description`,`price`,`currency`,`date`) VALUES (1,"1","Cartago","Carmen","Oferta","fringilla purus mauris a nunc. In at pede.","In faucibus. Morbi vehicula. Pellentesque tincidunt tempus risus. Donec egestas. Duis ac arcu. Nunc mauris. Morbi non sapien molestie orci tincidunt adipiscing. Mauris molestie pharetra",3061,"EUR","2013-10-29 01:08:32");
 INSERT INTO `adverts` (`category_id`,`user_id`,`district`,`city`,`type`,`title`,`description`,`price`,`currency`,`date`) VALUES (5,"3","BA","Palma de Mallorca","Cerere","feugiat. Lorem ipsum dolor sit amet, consectetuer","et libero. Proin mi. Aliquam gravida mauris ut mi. Duis risus odio, auctor vitae, aliquet nec, imperdiet nec,",4290,"EUR","2014-11-13 15:33:59");
-INSERT INTO `adverts` (`category_id`,`user_id`,`district`,`city`,`type`,`title`,`description`,`price`,`currency`,`date`) VALUES (4,"1","ParaÃ­ba","Patos","Oferta","est, mollis non, cursus non,","Cras sed leo. Cras vehicula aliquet libero. Integer in magna. Phasellus dolor elit, pellentesque a, facilisis non, bibendum sed, est. Nunc laoreet",4234,"RON","2014-03-05 10:29:48");
+INSERT INTO `adverts` (`category_id`,`user_id`,`district`,`city`,`type`,`title`,`description`,`price`,`currency`,`date`) VALUES (4,"1","Paraíba","Patos","Oferta","est, mollis non, cursus non,","Cras sed leo. Cras vehicula aliquet libero. Integer in magna. Phasellus dolor elit, pellentesque a, facilisis non, bibendum sed, est. Nunc laoreet",4234,"RON","2014-03-05 10:29:48");
 INSERT INTO `adverts` (`category_id`,`user_id`,`district`,`city`,`type`,`title`,`description`,`price`,`currency`,`date`) VALUES (4,"3","Lower Austria","Korneuburg","Oferta","Maecenas libero est, congue a, aliquet vel,","ligula elit, pretium et, rutrum non, hendrerit id, ante. Nunc mauris sapien, cursus in, hendrerit consectetuer,",2800,"EUR","2014-07-24 02:58:09");
 INSERT INTO `adverts` (`category_id`,`user_id`,`district`,`city`,`type`,`title`,`description`,`price`,`currency`,`date`) VALUES (4,"1","NI","Hawera","Oferta","ultricies ornare, elit elit fermentum risus, at","urna justo faucibus lectus, a sollicitudin orci sem eget massa. Suspendisse eleifend. Cras sed leo. Cras vehicula aliquet libero. Integer in magna. Phasellus dolor elit, pellentesque a, facilisis non, bibendum",2249,"EUR","2013-05-01 05:48:51");
-INSERT INTO `adverts` (`category_id`,`user_id`,`district`,`city`,`type`,`title`,`description`,`price`,`currency`,`date`) VALUES (3,"3","Styria","KÃ¶flach","Cerere","Cras sed leo. Cras vehicula","molestie tellus. Aenean egestas hendrerit neque. In ornare sagittis felis. Donec tempor, est ac mattis semper, dui lectus rutrum urna, nec luctus felis purus",4675,"EUR","2014-08-22 14:31:14");
+INSERT INTO `adverts` (`category_id`,`user_id`,`district`,`city`,`type`,`title`,`description`,`price`,`currency`,`date`) VALUES (3,"3","Styria","Köflach","Cerere","Cras sed leo. Cras vehicula","molestie tellus. Aenean egestas hendrerit neque. In ornare sagittis felis. Donec tempor, est ac mattis semper, dui lectus rutrum urna, nec luctus felis purus",4675,"EUR","2014-08-22 14:31:14");
 INSERT INTO `adverts` (`category_id`,`user_id`,`district`,`city`,`type`,`title`,`description`,`price`,`currency`,`date`) VALUES (3,"1","Gl","Culemborg","Oferta","Phasellus dapibus quam quis diam.","at arcu. Vestibulum ante ipsum primis in faucibus orci luctus et ultrices posuere cubilia Curae; Donec tincidunt. Donec vitae erat vel pede blandit congue. In scelerisque scelerisque dui. Suspendisse",2075,"EUR","2014-02-23 07:01:15");
 INSERT INTO `adverts` (`category_id`,`user_id`,`district`,`city`,`type`,`title`,`description`,`price`,`currency`,`date`) VALUES (1,"3","Namen","Saint-Marc","Cerere","Mauris blandit enim consequat","Curabitur massa. Vestibulum accumsan neque et nunc. Quisque ornare tortor at risus. Nunc ac sem ut dolor dapibus gravida. Aliquam tincidunt, nunc ac mattis ornare, lectus ante dictum mi, ac",823,"EUR","2014-11-17 20:01:50");
-INSERT INTO `adverts` (`category_id`,`user_id`,`district`,`city`,`type`,`title`,`description`,`price`,`currency`,`date`) VALUES (3,"1","Principado de Asturias","GijÃ³n","Oferta","et magnis dis parturient","diam lorem, auctor quis, tristique ac, eleifend vitae, erat. Vivamus nisi. Mauris nulla. Integer urna. Vivamus molestie dapibus ligula. Aliquam erat volutpat. Nulla dignissim. Maecenas ornare egestas ligula.",4532,"EUR","2013-06-06 19:56:21");
+INSERT INTO `adverts` (`category_id`,`user_id`,`district`,`city`,`type`,`title`,`description`,`price`,`currency`,`date`) VALUES (3,"1","Principado de Asturias","Gijón","Oferta","et magnis dis parturient","diam lorem, auctor quis, tristique ac, eleifend vitae, erat. Vivamus nisi. Mauris nulla. Integer urna. Vivamus molestie dapibus ligula. Aliquam erat volutpat. Nulla dignissim. Maecenas ornare egestas ligula.",4532,"EUR","2013-06-06 19:56:21");
 INSERT INTO `adverts` (`category_id`,`user_id`,`district`,`city`,`type`,`title`,`description`,`price`,`currency`,`date`) VALUES (5,"1","Nord-Pas-de-Calais","Lens","Cerere","libero lacus, varius et, euismod et, commodo","Praesent interdum ligula eu enim. Etiam imperdiet dictum magna. Ut tincidunt orci quis lectus. Nullam suscipit, est",3001,"RON","2014-08-07 00:03:47");
 INSERT INTO `adverts` (`category_id`,`user_id`,`district`,`city`,`type`,`title`,`description`,`price`,`currency`,`date`) VALUES (1,"1","South Island","Motueka","Oferta","odio. Phasellus at augue id","ullamcorper viverra. Maecenas iaculis aliquet diam. Sed diam lorem, auctor quis, tristique ac, eleifend vitae, erat. Vivamus nisi. Mauris nulla. Integer urna. Vivamus molestie dapibus ligula. Aliquam erat",4357,"RON","2014-06-12 13:06:12");
 INSERT INTO `adverts` (`category_id`,`user_id`,`district`,`city`,`type`,`title`,`description`,`price`,`currency`,`date`) VALUES (3,"3","Puglia","Cerignola","Cerere","Nunc pulvinar arcu et","sed leo. Cras vehicula aliquet libero. Integer in magna. Phasellus dolor elit, pellentesque a, facilisis non, bibendum sed, est. Nunc laoreet lectus quis massa. Mauris vestibulum, neque",3690,"EUR","2014-03-18 21:51:14");
@@ -67,7 +152,7 @@ INSERT INTO `adverts` (`category_id`,`user_id`,`district`,`city`,`type`,`title`,
 INSERT INTO `adverts` (`category_id`,`user_id`,`district`,`city`,`type`,`title`,`description`,`price`,`currency`,`date`) VALUES (2,"3","North Island","North Shore","Cerere","arcu et pede. Nunc sed","malesuada id, erat. Etiam vestibulum massa rutrum magna. Cras convallis convallis dolor. Quisque tincidunt pede",2816,"RON","2014-02-10 13:23:21");
 INSERT INTO `adverts` (`category_id`,`user_id`,`district`,`city`,`type`,`title`,`description`,`price`,`currency`,`date`) VALUES (5,"1","AN","Beerzel","Oferta","Nunc sollicitudin commodo ipsum. Suspendisse non leo.","ante dictum cursus. Nunc mauris elit, dictum eu, eleifend nec, malesuada ut, sem. Nulla interdum. Curabitur dictum. Phasellus in felis. Nulla tempor augue ac ipsum. Phasellus",671,"EUR","2013-04-21 09:34:15");
 INSERT INTO `adverts` (`category_id`,`user_id`,`district`,`city`,`type`,`title`,`description`,`price`,`currency`,`date`) VALUES (1,"3","Comunitat Valenciana","Alacant","Cerere","dignissim. Maecenas ornare egestas ligula. Nullam feugiat","ac arcu. Nunc mauris. Morbi non sapien molestie orci tincidunt adipiscing. Mauris molestie pharetra nibh. Aliquam ornare, libero at auctor ullamcorper, nisl",1852,"EUR","2013-01-04 21:08:39");
-INSERT INTO `adverts` (`category_id`,`user_id`,`district`,`city`,`type`,`title`,`description`,`price`,`currency`,`date`) VALUES (1,"1","EX","CÃ¡ceres","Oferta","Etiam gravida molestie arcu.","porttitor scelerisque neque. Nullam nisl. Maecenas malesuada fringilla est. Mauris eu turpis. Nulla aliquet. Proin velit. Sed malesuada augue ut lacus. Nulla tincidunt, neque vitae semper egestas, urna justo",4946,"RON","2014-03-15 15:12:00");
+INSERT INTO `adverts` (`category_id`,`user_id`,`district`,`city`,`type`,`title`,`description`,`price`,`currency`,`date`) VALUES (1,"1","EX","Cáceres","Oferta","Etiam gravida molestie arcu.","porttitor scelerisque neque. Nullam nisl. Maecenas malesuada fringilla est. Mauris eu turpis. Nulla aliquet. Proin velit. Sed malesuada augue ut lacus. Nulla tincidunt, neque vitae semper egestas, urna justo",4946,"RON","2014-03-15 15:12:00");
 INSERT INTO `adverts` (`category_id`,`user_id`,`district`,`city`,`type`,`title`,`description`,`price`,`currency`,`date`) VALUES (2,"1","Centre","Chartres","Oferta","tincidunt, nunc ac mattis ornare, lectus ante","sit amet, risus. Donec nibh enim, gravida sit amet, dapibus id, blandit at, nisi. Cum sociis natoque penatibus et magnis dis",4577,"EUR","2014-03-12 22:06:05");
 INSERT INTO `adverts` (`category_id`,`user_id`,`district`,`city`,`type`,`title`,`description`,`price`,`currency`,`date`) VALUES (5,"1","PE","Montague","Oferta","auctor non, feugiat nec, diam. Duis","non massa non ante bibendum ullamcorper. Duis cursus, diam at pretium aliquet, metus urna convallis",3619,"EUR","2014-05-29 17:02:47");
 INSERT INTO `adverts` (`category_id`,`user_id`,`district`,`city`,`type`,`title`,`description`,`price`,`currency`,`date`) VALUES (1,"1","Sb","Bischofshofen","Oferta","nunc est, mollis non,","tortor. Nunc commodo auctor velit. Aliquam nisl. Nulla eu neque pellentesque massa lobortis ultrices. Vivamus rhoncus. Donec est. Nunc ullamcorper, velit in aliquet",2567,"RON","2014-05-12 11:08:20");
@@ -86,7 +171,7 @@ INSERT INTO `adverts` (`category_id`,`user_id`,`district`,`city`,`type`,`title`,
 INSERT INTO `adverts` (`category_id`,`user_id`,`district`,`city`,`type`,`title`,`description`,`price`,`currency`,`date`) VALUES (4,"3","ON","Thorold","Cerere","erat eget ipsum. Suspendisse sagittis. Nullam vitae","eget, venenatis a, magna. Lorem ipsum dolor sit amet, consectetuer adipiscing elit. Etiam laoreet, libero et tristique pellentesque, tellus sem",1542,"RON","2014-05-18 22:36:36");
 INSERT INTO `adverts` (`category_id`,`user_id`,`district`,`city`,`type`,`title`,`description`,`price`,`currency`,`date`) VALUES (3,"1","CA","Santander","Cerere","fringilla, porttitor vulputate, posuere vulputate, lacus.","hymenaeos. Mauris ut quam vel sapien imperdiet ornare. In faucibus. Morbi vehicula. Pellentesque tincidunt tempus risus. Donec egestas. Duis ac arcu. Nunc mauris.",981,"EUR","2014-09-12 23:47:44");
 INSERT INTO `adverts` (`category_id`,`user_id`,`district`,`city`,`type`,`title`,`description`,`price`,`currency`,`date`) VALUES (4,"1","Gelderland","Arnhem","Oferta","Donec vitae erat vel pede blandit","rutrum, justo. Praesent luctus. Curabitur egestas nunc sed libero. Proin sed turpis nec mauris blandit mattis.",3348,"RON","2013-07-05 05:53:36");
-INSERT INTO `adverts` (`category_id`,`user_id`,`district`,`city`,`type`,`title`,`description`,`price`,`currency`,`date`) VALUES (4,"1","Franche-ComtÃ©","Dole","Oferta","neque non quam. Pellentesque habitant morbi","In scelerisque scelerisque dui. Suspendisse ac metus vitae velit egestas lacinia. Sed congue, elit sed consequat auctor, nunc nulla vulputate dui, nec",3708,"EUR","2013-05-13 10:23:05");
+INSERT INTO `adverts` (`category_id`,`user_id`,`district`,`city`,`type`,`title`,`description`,`price`,`currency`,`date`) VALUES (4,"1","Franche-Comté","Dole","Oferta","neque non quam. Pellentesque habitant morbi","In scelerisque scelerisque dui. Suspendisse ac metus vitae velit egestas lacinia. Sed congue, elit sed consequat auctor, nunc nulla vulputate dui, nec",3708,"EUR","2013-05-13 10:23:05");
 INSERT INTO `adverts` (`category_id`,`user_id`,`district`,`city`,`type`,`title`,`description`,`price`,`currency`,`date`) VALUES (5,"1","Mississippi","Gulfport","Oferta","nunc risus varius orci, in","ultricies dignissim lacus. Aliquam rutrum lorem ac risus. Morbi metus. Vivamus euismod urna. Nullam lobortis quam a felis ullamcorper viverra. Maecenas iaculis aliquet diam. Sed diam lorem, auctor quis,",2073,"EUR","2013-02-13 06:57:16");
 INSERT INTO `adverts` (`category_id`,`user_id`,`district`,`city`,`type`,`title`,`description`,`price`,`currency`,`date`) VALUES (2,"1","South Island","Ashburton","Oferta","Phasellus elit pede, malesuada vel, venenatis vel,","Fusce mollis. Duis sit amet diam eu dolor egestas rhoncus. Proin nisl sem, consequat nec, mollis vitae, posuere at, velit. Cras lorem lorem,",2713,"RON","2014-02-07 15:04:05");
 INSERT INTO `adverts` (`category_id`,`user_id`,`district`,`city`,`type`,`title`,`description`,`price`,`currency`,`date`) VALUES (4,"1","Puglia","Lecce","Cerere","adipiscing elit. Curabitur sed tortor. Integer aliquam","magna. Suspendisse tristique neque venenatis lacus. Etiam bibendum fermentum metus. Aenean sed pede nec ante blandit viverra.",3852,"RON","2014-09-07 23:21:14");
@@ -94,9 +179,9 @@ INSERT INTO `adverts` (`category_id`,`user_id`,`district`,`city`,`type`,`title`,
 INSERT INTO `adverts` (`category_id`,`user_id`,`district`,`city`,`type`,`title`,`description`,`price`,`currency`,`date`) VALUES (1,"1","Rhineland-Palatinate","Ingelheim","Oferta","magna tellus faucibus leo,","lectus pede, ultrices a, auctor non, feugiat nec, diam. Duis mi enim, condimentum eget, volutpat ornare, facilisis eget, ipsum.",1866,"RON","2014-09-21 17:58:47");
 INSERT INTO `adverts` (`category_id`,`user_id`,`district`,`city`,`type`,`title`,`description`,`price`,`currency`,`date`) VALUES (2,"1","Prince Edward Island","Montague","Cerere","mauris a nunc. In at","lorem lorem, luctus ut, pellentesque eget, dictum placerat, augue. Sed molestie. Sed id risus quis diam luctus lobortis. Class aptent taciti sociosqu ad litora torquent per conubia",3650,"EUR","2013-08-03 05:14:06");
 INSERT INTO `adverts` (`category_id`,`user_id`,`district`,`city`,`type`,`title`,`description`,`price`,`currency`,`date`) VALUES (3,"1","Limburg","Beverlo","Oferta","aliquet, sem ut cursus luctus, ipsum leo","non sapien molestie orci tincidunt adipiscing. Mauris molestie pharetra nibh. Aliquam ornare, libero at auctor ullamcorper, nisl arcu iaculis enim, sit amet ornare lectus justo",3005,"RON","2014-09-30 23:19:01");
-INSERT INTO `adverts` (`category_id`,`user_id`,`district`,`city`,`type`,`title`,`description`,`price`,`currency`,`date`) VALUES (3,"1","Midi-PyrÃ©nÃ©es","Montauban","Cerere","suscipit, est ac facilisis facilisis,","justo eu arcu. Morbi sit amet massa. Quisque porttitor eros nec tellus. Nunc lectus pede, ultrices a,",839,"RON","2013-04-02 23:45:58");
-INSERT INTO `adverts` (`category_id`,`user_id`,`district`,`city`,`type`,`title`,`description`,`price`,`currency`,`date`) VALUES (3,"3","Principado de Asturias","GijÃ³n","Cerere","et magnis dis parturient montes, nascetur ridiculus mus.","eleifend, nunc risus varius orci, in consequat enim diam vel arcu. Curabitur ut odio vel est tempor bibendum. Donec felis orci, adipiscing non, luctus sit",3560,"EUR","2014-07-20 13:42:47");
-INSERT INTO `adverts` (`category_id`,`user_id`,`district`,`city`,`type`,`title`,`description`,`price`,`currency`,`date`) VALUES (1,"3","GoiÃ¡s","Aparecida de GoiÃ¢nia","Oferta","orci. Ut sagittis lobortis","et pede. Nunc sed orci lobortis augue scelerisque mollis. Phasellus libero mauris, aliquam eu, accumsan sed, facilisis vitae, orci. Phasellus dapibus quam",4076,"RON","2014-08-23 12:53:23");
+INSERT INTO `adverts` (`category_id`,`user_id`,`district`,`city`,`type`,`title`,`description`,`price`,`currency`,`date`) VALUES (3,"1","Midi-Pyrénées","Montauban","Cerere","suscipit, est ac facilisis facilisis,","justo eu arcu. Morbi sit amet massa. Quisque porttitor eros nec tellus. Nunc lectus pede, ultrices a,",839,"RON","2013-04-02 23:45:58");
+INSERT INTO `adverts` (`category_id`,`user_id`,`district`,`city`,`type`,`title`,`description`,`price`,`currency`,`date`) VALUES (3,"3","Principado de Asturias","Gijón","Cerere","et magnis dis parturient montes, nascetur ridiculus mus.","eleifend, nunc risus varius orci, in consequat enim diam vel arcu. Curabitur ut odio vel est tempor bibendum. Donec felis orci, adipiscing non, luctus sit",3560,"EUR","2014-07-20 13:42:47");
+INSERT INTO `adverts` (`category_id`,`user_id`,`district`,`city`,`type`,`title`,`description`,`price`,`currency`,`date`) VALUES (1,"3","Goiás","Aparecida de Goiânia","Oferta","orci. Ut sagittis lobortis","et pede. Nunc sed orci lobortis augue scelerisque mollis. Phasellus libero mauris, aliquam eu, accumsan sed, facilisis vitae, orci. Phasellus dapibus quam",4076,"RON","2014-08-23 12:53:23");
 INSERT INTO `adverts` (`category_id`,`user_id`,`district`,`city`,`type`,`title`,`description`,`price`,`currency`,`date`) VALUES (2,"1","NI","Napier","Oferta","ante bibendum ullamcorper. Duis cursus, diam at pretium","mus. Proin vel arcu eu odio tristique pharetra. Quisque ac libero nec ligula consectetuer rhoncus. Nullam velit dui, semper et, lacinia vitae, sodales at,",1872,"EUR","2013-04-30 15:50:18");
 INSERT INTO `adverts` (`category_id`,`user_id`,`district`,`city`,`type`,`title`,`description`,`price`,`currency`,`date`) VALUES (5,"3","Z.","The Hague","Cerere","at arcu. Vestibulum ante ipsum primis","condimentum. Donec at arcu. Vestibulum ante ipsum primis in faucibus orci luctus et ultrices posuere cubilia Curae; Donec tincidunt. Donec vitae erat vel pede blandit congue. In",3773,"RON","2013-11-07 18:23:22");
 INSERT INTO `adverts` (`category_id`,`user_id`,`district`,`city`,`type`,`title`,`description`,`price`,`currency`,`date`) VALUES (4,"1","Aquitaine","Bordeaux","Cerere","Vivamus rhoncus. Donec est. Nunc","tristique pharetra. Quisque ac libero nec ligula consectetuer rhoncus. Nullam velit dui, semper et, lacinia vitae, sodales at, velit. Pellentesque ultricies",3079,"RON","2013-03-15 20:07:53");
@@ -106,4 +191,4 @@ INSERT INTO `adverts` (`category_id`,`user_id`,`district`,`city`,`type`,`title`,
 INSERT INTO `adverts` (`category_id`,`user_id`,`district`,`city`,`type`,`title`,`description`,`price`,`currency`,`date`) VALUES (1,"3","MD","Frederick","Cerere","nascetur ridiculus mus. Donec dignissim magna a tortor.","sem, consequat nec, mollis vitae, posuere at, velit. Cras lorem lorem, luctus ut, pellentesque eget, dictum placerat, augue. Sed molestie. Sed id risus quis diam luctus lobortis.",1450,"RON","2013-06-29 10:52:44");
 INSERT INTO `adverts` (`category_id`,`user_id`,`district`,`city`,`type`,`title`,`description`,`price`,`currency`,`date`) VALUES (1,"1","Molise","San Giovanni in Galdo","Cerere","at arcu. Vestibulum ante ipsum primis in","Phasellus libero mauris, aliquam eu, accumsan sed, facilisis vitae, orci. Phasellus dapibus quam quis diam. Pellentesque habitant morbi tristique senectus et netus",2618,"RON","2014-12-05 14:02:34");
 INSERT INTO `adverts` (`category_id`,`user_id`,`district`,`city`,`type`,`title`,`description`,`price`,`currency`,`date`) VALUES (1,"3","SI","Westport","Cerere","ligula eu enim. Etiam imperdiet","feugiat tellus lorem eu metus. In lorem. Donec elementum, lorem ut aliquam iaculis, lacus pede sagittis augue, eu",4900,"RON","2013-03-31 05:53:09");
-INSERT INTO `adverts` (`category_id`,`user_id`,`district`,`city`,`type`,`title`,`description`,`price`,`currency`,`date`) VALUES (2,"3","RP","Haï¿½loch","Cerere","vulputate eu, odio. Phasellus at augue","bibendum sed, est. Nunc laoreet lectus quis massa. Mauris vestibulum, neque sed dictum eleifend, nunc risus varius orci, in consequat enim diam vel arcu. Curabitur ut",2637,"EUR","2013-07-06 21:05:19");
+INSERT INTO `adverts` (`category_id`,`user_id`,`district`,`city`,`type`,`title`,`description`,`price`,`currency`,`date`) VALUES (2,"3","RP","Ha�loch","Cerere","vulputate eu, odio. Phasellus at augue","bibendum sed, est. Nunc laoreet lectus quis massa. Mauris vestibulum, neque sed dictum eleifend, nunc risus varius orci, in consequat enim diam vel arcu. Curabitur ut",2637,"EUR","2013-07-06 21:05:19");
